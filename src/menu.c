@@ -2,6 +2,7 @@
 #define MENU_C
 
 #include "raygui.h"
+#include "mainGame.h"
 
 
 // Layout Settings
@@ -28,14 +29,18 @@ void initMenu(){
     // Game Start Detection
     gameStart = false;
     gameExit = false;
+
     // Load Style For UI
     GuiLoadStyle("resources/jungle.rgs");
+
     // Load Title Font
     TITLEFONT = LoadFont("resources/titleFont.ttf");
+
     // Initialize Title Location
     titleDim = MeasureTextEx(GetFontDefault(), TITLE, TITLE_FONT_SIZE, TITLE_FONT_SPACING);
     TITLE_POS.x = GetScreenWidth()/2 - titleDim.x;
     TITLE_POS.y = GetScreenHeight()/4;
+
     // Initialize Button Location
     BUTTON_X = GetScreenWidth()/2 - BUTTON_WIDTH/2;
     BUTTON_Y = GetScreenHeight()/2 - BUTTON_HEIGHT/2;
@@ -44,6 +49,8 @@ void initMenu(){
 
 // Draw Menu and User Input Detections
 void drawMenu(){
+    // Draw Background
+    ClearBackground(BLACK);
 
     // Draw Title
     DrawTextEx(GetFontDefault(), "Zombie Coming", TITLE_POS, TITLE_FONT_SIZE, TITLE_FONT_SIZE, RED);
@@ -53,22 +60,26 @@ void drawMenu(){
     startButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT}, "Start Game"); 
     bool settingButtonPress = false;
     settingButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Settings");
-    bool creaditButtonPress = false;
-    creaditButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+2*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Credit");
+    bool creditButtonPress = false;
+    creditButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+2*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Credit");
     bool quitButtonPress = false;
     quitButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+3*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Quit");
 
     // Button Press Function Call
     if(startButtonPress == true){
+        // Load Main Game
+        initMainGame();
         gameStart = true;
     }
     if(settingButtonPress == true){
-
+        // Load Settings Menu
     }
-    if(creaditButtonPress == true){
+    if(creditButtonPress == true){
+        // Load Credit Page
 
     }
     if(quitButtonPress == true){
+        // Exit
         gameExit = true;
     }
 

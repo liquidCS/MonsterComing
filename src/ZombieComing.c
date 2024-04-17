@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "menu.h"
+#include "mainGame.h"
 
 int main(void)
 {
@@ -12,13 +13,12 @@ int main(void)
     // Menu Initialize
     initMenu();
 
-    // quit detection
+    // Quit Game Detection
     bool shouldQuit = false;
+    // Game Loop
     while (WindowShouldClose() == false && shouldQuit == false)
     {   
         BeginDrawing();
-
-        ClearBackground(BLACK);
         
         if(shouldStartGame() == false){
             // Draw Menu
@@ -26,11 +26,9 @@ int main(void)
             shouldQuit = shouldExitGame() == true ? true : false;
         }
         if(shouldStartGame() == true){
+            // Run Main Game
             drawMainGame();
         }
-
-        // Player
-        // DrawTexturePro(scarfy, sourceRec, destRec, origin, (float)rotation, WHITE);
         
         EndDrawing();
     }

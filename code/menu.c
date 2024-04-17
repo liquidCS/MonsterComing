@@ -1,5 +1,5 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef MENU_C
+#define MENU_C
 
 #include "raygui.h"
 
@@ -15,14 +15,19 @@ int BUTTON_Y;
 // By https://www.dafont.com/stranger-back-in-the-night.font personal use only
 Font TITLEFONT;
 #define TITLE_FONT_SIZE 50
-#define TITLE_FONT_SPACING 10.0f
+#define TITLE_FONT_SPACING 5.0f
 #define TITLE "Zombie Coming"
 Vector2 titleDim;
 Vector2 TITLE_POS;
 
+bool gameStart;
+bool gameExit;
 
 // load style from file and initialize variables
-void loadMenuStyle(){
+void initMenu(){
+    // Game Start Detection
+    gameStart = false;
+    gameExit = false;
     // Load Style For UI
     GuiLoadStyle("resources/jungle.rgs");
     // Load Title Font
@@ -55,7 +60,7 @@ void drawMenu(){
 
     // Button Press Function Call
     if(startButtonPress == true){
-
+        gameStart = true;
     }
     if(settingButtonPress == true){
 
@@ -64,10 +69,18 @@ void drawMenu(){
 
     }
     if(quitButtonPress == true){
-
+        gameExit = true;
     }
 
     return;
+}
+
+bool shouldStartGame(){
+    return gameStart;
+}
+
+bool shouldExitGame(){
+    return gameExit;
 }
 
 #endif

@@ -2,8 +2,12 @@
 #define MENU_H
 
 
-void loadMenuStyle();
+void initMenu();
 void drawMenu();
+
+bool shouldStartGame();
+bool shouldExitGame();
+
 
 
 #endif

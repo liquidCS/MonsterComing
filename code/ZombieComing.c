@@ -9,27 +9,25 @@ int main(void)
     ToggleFullscreen();
     SetTargetFPS(60);
 
-    Texture2D scarfy = LoadTexture("resources/dinosaur.png");\
-    int frameWidth = scarfy.width/6;
-    int frameHeight = scarfy.height;        
-    Rectangle sourceRec = { 0.0f, 0.0f, (float)frameWidth, (float)frameHeight };
-    Rectangle destRec = { screenWidth/2.0f, screenHeight/2.0f, frameWidth*2.0f, frameHeight*2.0f };
-    Vector2 origin = { (float)frameWidth, (float)frameHeight };
-    int rotation = 0;
+    // Menu Initialize
+    initMenu();
 
-    //load UI style
-    loadMenuStyle();
-
-    while (WindowShouldClose() == false)
+    // quit detection
+    bool shouldQuit = false;
+    while (WindowShouldClose() == false && shouldQuit == false)
     {   
-        rotation++;
         BeginDrawing();
-        // Draw Word
-        ClearBackground(RAYWHITE);
-        DrawText("Player 1", 20, 20, 30, BLACK);
+
+        ClearBackground(BLACK);
         
-        // Draw Menu
-        drawMenu();
+        if(shouldStartGame() == false){
+            // Draw Menu
+            drawMenu();
+            shouldQuit = shouldExitGame() == true ? true : false;
+        }
+        if(shouldStartGame() == true){
+            drawMainGame();
+        }
 
         // Player
         // DrawTexturePro(scarfy, sourceRec, destRec, origin, (float)rotation, WHITE);

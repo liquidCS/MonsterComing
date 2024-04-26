@@ -3,6 +3,7 @@
 
 #include "raygui.h"
 #include "mainGame.h"
+#include "mainPlayer.h"
 
 
 // Layout Settings
@@ -69,6 +70,7 @@ void drawMenu(){
     if(startButtonPress == true){
         // Load Main Game
         initMainGame();
+        initMainPlayer();
         gameStart = true;
     }
     if(settingButtonPress == true){

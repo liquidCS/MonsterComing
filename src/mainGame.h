@@ -5,4 +5,7 @@ void initMainGame();
 void drawMainGame();
 void endMainGame();
 
+
+Texture2D getMainGameBackGround();
+
 #endif

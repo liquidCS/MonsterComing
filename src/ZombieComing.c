@@ -4,8 +4,8 @@
 
 int main(void)
 {
-    int screenWidth = 1920; 
-    int screenHeight = 1080;
+    int screenWidth = GetScreenWidth(); 
+    int screenHeight = GetScreenHeight();
     InitWindow(screenWidth, screenHeight, "ZombieComing");
     ToggleFullscreen();
     SetTargetFPS(60);
@@ -18,20 +18,24 @@ int main(void)
     // Game Loop
     while (WindowShouldClose() == false && shouldQuit == false)
     {   
+        // RayLib Start Drawing
         BeginDrawing();
         
         if(shouldStartGame() == false){
             // Draw Menu
             drawMenu();
-            shouldQuit = shouldExitGame() == true ? true : false;
+            shouldQuit = shouldExitGame();
         }
         if(shouldStartGame() == true){
             // Run Main Game
             drawMainGame();
         }
-        
+        // RayLib End Drawing
         EndDrawing();
     }
+    // Unload game
+    endMainGame();
+    // RauLib Close Window
     CloseWindow();
 
     return 0;

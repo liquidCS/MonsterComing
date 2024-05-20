@@ -1,10 +1,12 @@
 #ifndef MENU_C
 #define MENU_C
 
+#define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #include "mainGame.h"
 #include "mainPlayer.h"
-
+#include "menuPages.h"
+#include "zombies.h"
 
 // Layout Settings
 int BUTTON_X;
@@ -12,6 +14,15 @@ int BUTTON_Y;
 #define BUTTON_WIDTH 200
 #define BUTTON_HEIGHT 50
 #define BUTTON_GAP (20 + BUTTON_HEIGHT)
+
+int TOGGLE_X;
+int TOGGLE_Y;
+int currentCharacter;
+#define TOGGLE_WIDTH 200
+#define TOGGLE_HEIGHT 50
+#define CHARACTERNUM 2
+#define CHARACTERS_CHAR_LIST "WARRIOR;NINJA;WITCH"
+Texture2D charactersPreview[CHARACTERNUM];
 
 // Title Settings and Fonts
 // By https://www.dafont.com/stranger-back-in-the-night.font personal use only
@@ -25,6 +36,15 @@ Vector2 TITLE_POS;
 bool gameStart;
 bool gameExit;
 
+enum PAGES {mainMenu, setting, credit};
+enum PAGES currentPage;
+
+// User Selections
+enum characterSelections selectedCharacter;
+
+// functions
+void freeMenu();
+
 // load style from file and initialize variables
 void initMenu(){
     // Game Start Detection
@@ -33,6 +53,7 @@ void initMenu(){
 
     // Load Style For UI
     GuiLoadStyle("resources/jungle.rgs");
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
 
     // Load Title Font
     TITLEFONT = LoadFont("resources/titleFont.ttf");
@@ -45,6 +66,21 @@ void initMenu(){
     // Initialize Button Location
     BUTTON_X = GetScreenWidth()/2 - BUTTON_WIDTH/2;
     BUTTON_Y = GetScreenHeight()/2 - BUTTON_HEIGHT/2;
+
+    // Initialize Toggele Location
+    TOGGLE_X = GetScreenWidth()/1.5;
+    TOGGLE_Y = GetScreenHeight()/1.5;
+
+    // Load Character Preview Images
+    currentCharacter = 0;
+    charactersPreview[0] = LoadTexture("resources/characters/64TempCh1.png");
+    charactersPreview[1] = LoadTexture("resources/characters/64TempCh2.png");
+    charactersPreview[1] = LoadTexture("resources/characters/64TempCh3.png");
+
+    // Initialize Pages and Careers
+    currentPage = mainMenu;
+    selectedCharacter = WARRIOR;
+    
     return;
 }
 
@@ -57,30 +93,37 @@ void drawMenu(){
     DrawTextEx(GetFontDefault(), "Zombie Coming", TITLE_POS, TITLE_FONT_SIZE, TITLE_FONT_SIZE, RED);
     
     // Draw Buttons and Detections Player Input
-    bool startButtonPress = false;
-    startButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT}, "Start Game"); 
-    bool settingButtonPress = false;
-    settingButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Settings");
-    bool creditButtonPress = false;
-    creditButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+2*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Credit");
-    bool quitButtonPress = false;
-    quitButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+3*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Quit");
+    bool startButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT}, "Start Game"); 
+    bool settingButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Settings");
+    bool creditButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+2*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Credit");
+    bool quitButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+3*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Quit");
 
-    // Button Press Function Call
+    // Character Selector
+    DrawTexture(charactersPreview[currentCharacter], TOGGLE_X + (TOGGLE_WIDTH-charactersPreview[currentCharacter].width)/2, TOGGLE_Y - charactersPreview[currentCharacter].height-BUTTON_GAP, WHITE);
+    GuiComboBox((Rectangle){TOGGLE_X, TOGGLE_Y, TOGGLE_WIDTH, TOGGLE_HEIGHT}, CHARACTERS_CHAR_LIST, &currentCharacter);
+
+    // Button Press Function Call and Current Page Drawing
     if(startButtonPress == true){
         // Load Main Game
         initMainGame();
-        initMainPlayer();
+        initMainPlayer(currentCharacter);
+        initZombies();
         gameStart = true;
+        freeMenu();
     }
-    if(settingButtonPress == true){
+    else if(settingButtonPress == true || currentPage == setting){
         // Load Settings Menu
+        currentPage = setting;
+        drawSettingsPage();
+        if(shouldQuitSettingsPage()) currentPage = mainMenu;
     }
-    if(creditButtonPress == true){
+    else if(creditButtonPress == true || currentPage == credit){
         // Load Credit Page
-
+        currentPage = credit;
+        drawCreditsPage();
+        if(shouldQuitCreditsPage()) currentPage = mainMenu;
     }
-    if(quitButtonPress == true){
+    else if(quitButtonPress == true){
         // Exit
         gameExit = true;
     }
@@ -94,6 +137,12 @@ bool shouldStartGame(){
 
 bool shouldExitGame(){
     return gameExit;
+}
+
+void freeMenu(){
+    for(int i=0; i<sizeof(charactersPreview)/sizeof(charactersPreview[0]); i++){
+        UnloadTexture(charactersPreview[i]);
+    }
 }
 
 #endif

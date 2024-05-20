@@ -8,6 +8,4 @@ void drawMenu();
 bool shouldStartGame();
 bool shouldExitGame();
 
-
-
 #endif

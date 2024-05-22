@@ -6,6 +6,7 @@
 #include <math.h>
 #include "raylib.h"
 #include "zombies.h"
+#include "coins.h"
 #include "mainPlayer.h"
 #include "basic.h"
 
@@ -32,8 +33,13 @@ zombie * createNewZombie(int zombieType, Vector2 position){
     zombie *newZombie = (zombie *)malloc(sizeof(zombie));
     if(zombieType == ZTEMP1){
         newZombie -> zombieType = zombieType;
+        newZombie -> maxHealth = 10;
         newZombie -> health = 10;
         newZombie -> speed = 50;
+        
+        newZombie -> dropXP = 10;
+        newZombie -> dropCoin = 1;
+        
         newZombie -> position = position;
         newZombie -> hitbox = (Rectangle) {position.x, position.y, 32.0f, 32.0f};
     }
@@ -54,6 +60,12 @@ void spawnZombie(int zombieType){
 }
 
 void killZombie(zombie *priorZombie, zombie *targetZombie){
+    
+    // Drop Coins
+    spawnCoin(targetZombie->center, targetZombie->dropCoin);
+    // Add XP
+    addMainPlayerXp(targetZombie->dropXP);
+    // free Zombie
     priorZombie->nextZombie = targetZombie->nextZombie;
     lastZombie = priorZombie;
     free(targetZombie);
@@ -63,7 +75,7 @@ void killZombie(zombie *priorZombie, zombie *targetZombie){
 void drawZombieDamageValue(zombie *targetZombie, int damage){
     char num[10];
     sprintf(num, "%d", damage);
-    DrawText(num, targetZombie->position.x + rand()%(int)targetZombie->hitbox.width, targetZombie->position.y - 20 , 15, RED);
+    DrawText(num, targetZombie->position.x + rand()%(int)targetZombie->hitbox.width, targetZombie->position.y - 30 , 15, RED);
     return;
 }
 
@@ -73,6 +85,11 @@ void drawZombies(){
     while(currZombie != NULL){
         if(currZombie->zombieType != FIRSTNODEZOMBIE){
             DrawTexture(zombieTextures[currZombie->zombieType], currZombie->position.x, currZombie->position.y, WHITE);
+            if(currZombie->health != currZombie->maxHealth){
+                DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, RED);
+                DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, ((float)currZombie->health/currZombie->maxHealth)*currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, GREEN);
+            }
+            
             if(DEBUG == 1) DrawRectangleLines(currZombie->hitbox.x, currZombie->hitbox.y, currZombie->hitbox.width, currZombie->hitbox.height, RED);
         }
         // Next Zombie Node
@@ -81,11 +98,13 @@ void drawZombies(){
 }
 
 void zombieMovement(){
-    zombie * currZombie = zombies;
+    zombie *currZombie = zombies;
+    Vector2 oldPosition;
     float dt = GetFrameTime();
 
     while(currZombie != NULL){
         if(currZombie->zombieType != FIRSTNODEZOMBIE) {
+            oldPosition = currZombie->position;
             float radian = atanf(fabs((getMainPlayerCenter().y - currZombie->center.y)/(getMainPlayerCenter().x - currZombie->center.x)));
             float x = getMainPlayerCenter().x - currZombie->center.x > 0 ? 1.0 : -1.0;
             float y = getMainPlayerCenter().y - currZombie->center.y > 0 ? 1.0 : -1.0;
@@ -125,6 +144,18 @@ void zombieCheck(){
             currZombie = currZombie->nextZombie;
         }
     }
+}
+
+// Free Zombie
+void freeAllZombie(){
+    zombie *currZombie = zombies, *nextZombie;
+    while(currZombie != NULL){
+        nextZombie = currZombie->nextZombie;
+        free(currZombie);
+        currZombie = nextZombie;
+    }
+    free(currZombie);
+    return;
 }
 
 zombie * getZombies(){

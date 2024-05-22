@@ -196,4 +196,21 @@ float getNormalAttackCool(){
     return mainPlayer.normalAttackCool;
 }
 
+
+void addMainPlayerXp(int xp){
+    mainPlayer.xp += xp;
+    return;
+}
+
+
+void addMainPlayerCoin(int coin){
+    mainPlayer.coins += coin;
+    return;
+}
+
+void minusMainPlayerCoin(int coin){
+    mainPlayer.coins -= coin;
+    return;
+}
+
 #endif

@@ -18,7 +18,7 @@ struct player
     float speed; // pixel per sec (PPS)
     int level;
     int xp;
-
+    int coins;
     // Attacks
     int normalAttackDamage;
     float normalAttackCool;
@@ -61,5 +61,11 @@ void setMainPlayerFacing(int);
 // Attacks
 int getNormalAttackDamage();
 float getNormalAttackCool();
+
+// attribute
+
+void addMainPlayerXp(int);
+void addMainPlayerCoin(int);
+void minusMainPlayerCoin(int);
 
 #endif

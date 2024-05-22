@@ -6,10 +6,19 @@
 #define ZombieTypesCount 2
 enum zombieTypes {ZTEMP1, ZTEMP2, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for identification for the first node of zombies
 
+// For Zombie Health Bar
+#define LEVEL1_HEALTHBAR_HEIGHT 5
+
+
 typedef struct zombieNode{
     int zombieType; // enum zombieTypes
+    int maxHealth;
     int health;
     float speed; // pixel per sec (PPS)
+    // loot
+    int dropXP;
+    int dropCoin;
+    // 
     Vector2 position;
     Vector2 center;
     Rectangle hitbox;
@@ -28,6 +37,8 @@ void zombieMovement(); // move zombie towards the player
 
 void zombieCheck();
 
+// Clear All Zombies in Link list
+void freeAllZombie();
 
 zombie * getZombies();
 

@@ -107,7 +107,6 @@ void drawMenu(){
         // Load Main Game
         initMainGame();
         initMainPlayer(currentCharacter);
-        initZombies();
         gameStart = true;
         freeMenu();
     }

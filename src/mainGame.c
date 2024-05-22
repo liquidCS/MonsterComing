@@ -6,6 +6,7 @@
 #include "inputHandler.h"
 #include "basic.h"
 #include "zombies.h"
+#include "coins.h"
 #include <stdio.h>
 
 
@@ -23,6 +24,9 @@ void initMainGame(){
     mainCam.rotation = 0;
     mainCam.target = (Vector2){0, 0}; // *temporary: need to grab from player location
     mainCam.zoom = 1.0;
+
+    initCoins();
+    initZombies();
 
     return;
 }
@@ -49,9 +53,17 @@ void _cameraRenderFix(){
 
 // Main Game
 void drawMainGame(){
+    // Render Using Custom Camera
+    mainCam.target = (Vector2){(int)getMainPlayerLoc().x, (int)getMainPlayerLoc().y};
+    _cameraRenderFix();
+    BeginMode2D(mainCam);
 
     // Cool Down, Animation...
     timerUpdate();
+
+    // Draw Back Ground
+    ClearBackground(WHITE);
+    DrawTexture(backGround, 0, 0, WHITE);
 
     // Update Zombie Movement
     zombieMovement();
@@ -62,15 +74,12 @@ void drawMainGame(){
 
     // Check Zombie 
     zombieCheck();
+    
+    // Detect If coin is Pick By Player
+    coinPickDetect();
 
-    // Render Using Custom Camera
-    mainCam.target = (Vector2){(int)getMainPlayerLoc().x, (int)getMainPlayerLoc().y};
-    _cameraRenderFix();
-    BeginMode2D(mainCam);
-
-    // Draw Back Ground
-    ClearBackground(WHITE);
-    DrawTexture(backGround, 0, 0, WHITE);
+    // Draw loots
+    drawCoins();
 
     // Draw All Zombies
     drawZombies();
@@ -92,6 +101,7 @@ void drawMainGame(){
 // Unload Texture, Sound... from Memory
 void endMainGame(){
     UnloadTexture(backGround);
+    freeAllZombie();
     return;
 }
 

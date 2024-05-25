@@ -7,12 +7,13 @@
 #include "basic.h"
 #include "zombies.h"
 #include "coins.h"
+#include "mainGameGUI.h"
 #include <stdio.h>
 
 
 Texture2D backGround;
 Camera2D mainCam;
-
+Vector2 screenCoord;
 
 // Load Texture, Sound and Initialize Valuables
 void initMainGame(){
@@ -49,6 +50,11 @@ void _cameraRenderFix(){
         mainCam.offset.y = GetScreenHeight() - (backGround.height - mainCam.target.y);
     else
         mainCam.offset.y = GetScreenHeight()/2 - getMainPlayerHitbox().height/2;
+
+
+    screenCoord.x = mainCam.target.x - mainCam.offset.x;
+    screenCoord.y = mainCam.target.y - mainCam.offset.y;
+    return;
 }
 
 // Main Game
@@ -90,10 +96,13 @@ void drawMainGame(){
     // Draw Attack Animation
     drawAttack();
 
+    // Draw GUI
+    drawGUI();
+
     // Debug
-    if(DEBUG == 1){
+    #if DEBUG == 1
         DrawRectangleLines(getMainPlayerHitbox().x, getMainPlayerHitbox().y, getMainPlayerHitbox().width, getMainPlayerHitbox().height, RED);
-    }
+    #endif
 
     return;
 }
@@ -109,6 +118,11 @@ void endMainGame(){
 // Get Backgroud Texture (should be a single c file if there is several different maps)
 Texture2D getMainGameBackGround(){
     return backGround;
+}
+
+
+Vector2 getScreenCoord(){
+    return screenCoord;
 }
 
 #endif

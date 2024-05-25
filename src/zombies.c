@@ -63,8 +63,6 @@ void killZombie(zombie *priorZombie, zombie *targetZombie){
     
     // Drop Coins
     spawnCoin(targetZombie->center, targetZombie->dropCoin);
-    // Add XP
-    addMainPlayerXp(targetZombie->dropXP);
     // free Zombie
     priorZombie->nextZombie = targetZombie->nextZombie;
     lastZombie = priorZombie;

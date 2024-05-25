@@ -7,8 +7,7 @@ void initMainGame();
 void drawMainGame();
 void endMainGame();
 
-
-
 Texture2D getMainGameBackGround();
+Vector2 getScreenCoord();
 
 #endif

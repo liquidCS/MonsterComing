@@ -40,6 +40,10 @@ void initMainPlayer(int SELECTEDCHARACTER){
     mainPlayer.center = (Vector2){PLAYER_START_X + mainPlayer.hitbox.width/2, PLAYER_START_Y + mainPlayer.hitbox.height/2};
     mainPlayer.speed = 1000.0;
 
+    // Health
+    mainPlayer.maxHealth = 100;
+    mainPlayer.currHealth = 100;
+
     //Attack Damage
     mainPlayer.normalAttackDamage = 5;
     mainPlayer.normalAttackCool = 1;
@@ -196,12 +200,30 @@ float getNormalAttackCool(){
     return mainPlayer.normalAttackCool;
 }
 
+float getNormalAttackTimer(){
+    return mainPlayer.normalAttackTimer;
+}
 
 void addMainPlayerXp(int xp){
     mainPlayer.xp += xp;
     return;
 }
 
+// Health
+int getMainPlayerCurrHealth(){
+    return mainPlayer.currHealth;
+}
+
+int getMainPlayerMaxHealth(){
+    return mainPlayer.maxHealth;
+}
+
+
+
+// Coins
+int getMainPlayerCoins(){
+    return mainPlayer.coins;
+}
 
 void addMainPlayerCoin(int coin){
     mainPlayer.coins += coin;

@@ -10,7 +10,7 @@ int main(void)
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
     InitWindow(screenWidth, screenHeight, "ZombieComing");
-    // ToggleFullscreen();
+    ToggleFullscreen();
     SetTargetFPS(60);
 
     // Menu Initialize

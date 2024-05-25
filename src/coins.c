@@ -58,10 +58,10 @@ void coinPickDetect(){
     coin *currCoin = coins, *prevCoin, *nextCoin;
     while(currCoin != NULL){
         if(currCoin->value != -1){
-            printf("printing\n");
             if(CheckCollisionRecs((Rectangle){currCoin->position.x, currCoin->position.y, COIN_TEXTURE_WIDTH, COIN_TEXTURE_HEIGHT}, getMainPlayerHitbox())){
                 addMainPlayerCoin(currCoin->value);
                 nextCoin = currCoin->nextCoin;
+                lastCoin = prevCoin;
                 deleteCoin(prevCoin, currCoin);
                 currCoin = nextCoin;
             }

@@ -15,6 +15,7 @@
 Texture2D zombieTextures[ZombieTypesCount];
 // Zombies
 zombie *zombies, *lastZombie;
+zombieDamage *damageAnimation;
 
 
 void initZombies(){
@@ -23,9 +24,13 @@ void initZombies(){
     zombies = (zombie *) malloc(sizeof(zombie));
     (*zombies) = (zombie){.zombieType=FIRSTNODEZOMBIE, .nextZombie = NULL};
     lastZombie = zombies;
+    // Initilize Zombies Damage Animation
+    damageAnimation = (zombieDamage *)malloc(sizeof(zombieDamage));
+    (*damageAnimation) = (zombieDamage){.damage = -1};
     // Load Texture
     zombieTextures[ZTEMP1] = LoadTexture("resources/zombies/tempZombie.png");
     
+
     return;
 }
 
@@ -60,7 +65,6 @@ void spawnZombie(int zombieType){
 }
 
 void killZombie(zombie *priorZombie, zombie *targetZombie){
-    
     // Drop Coins
     spawnCoin(targetZombie->center, targetZombie->dropCoin);
     // free Zombie
@@ -69,14 +73,6 @@ void killZombie(zombie *priorZombie, zombie *targetZombie){
     free(targetZombie);
     return;
 }
-
-void drawZombieDamageValue(zombie *targetZombie, int damage){
-    char num[10];
-    sprintf(num, "%d", damage);
-    DrawText(num, targetZombie->position.x + rand()%(int)targetZombie->hitbox.width, targetZombie->position.y - 30 , 15, RED);
-    return;
-}
-
 
 void drawZombies(){
     zombie * currZombie = zombies;
@@ -159,5 +155,53 @@ void freeAllZombie(){
 zombie * getZombies(){
     return zombies;
 }
+
+
+
+// Draw ZombieDamage
+void addZombieDamageAnimation(zombie *targetZombie, int damage, damageTypes damageType){
+    zombieDamage *currAnimation = damageAnimation;
+    while(currAnimation->nextDamage != NULL){
+        currAnimation = currAnimation->nextDamage;
+    }
+    currAnimation->nextDamage = (zombieDamage *)malloc(sizeof(zombieDamage)); // create new animation
+    currAnimation = currAnimation->nextDamage;
+    Vector2 animationPos = {targetZombie->position.x + rand()%(int)targetZombie->hitbox.width, targetZombie->position.y - 40}; 
+    if(damageType == NORMAL)
+        *currAnimation = (zombieDamage){damage, animationPos, NORMAL, 0, NORMAL_DAMAGE_TIME, NULL};
+    else if(damageType == CRITICAL)
+        *currAnimation = (zombieDamage){damage, animationPos, CRITICAL, 0, CRITICAL_DAMAGE_TIME, NULL};
+    return;
+}
+
+void drawZombieDamageValue(){
+    char animationText[10];
+    int animationFontSize;
+    Color animationColor;
+    zombieDamage *currAnimation = damageAnimation, *prevAnimation = currAnimation;
+    while(currAnimation != NULL){
+        if(currAnimation->damage != -1){
+            itoa(currAnimation->damage, animationText, 10); // int to string
+            animationFontSize = currAnimation->damageType == NORMAL ? NORMAL_DAMAGE_FONTSIZE : CRITICAL_DAMAGE_FONTSIZE; // Assign FontSize
+            animationColor = currAnimation->damageType == NORMAL ? NORMAL_DAMAGE_COLOR : CRITICAL_DAMAGE_COLOR;// Assign Colors
+            // Draw 
+            DrawText(animationText, currAnimation->position.x, currAnimation->position.y, animationFontSize, animationColor);
+            // Add Time to currNode and check
+            currAnimation->currTime += GetFrameTime();
+            if(currAnimation->currTime >= currAnimation->existTime){
+                prevAnimation->nextDamage = currAnimation->nextDamage;
+                free(currAnimation);
+                currAnimation = prevAnimation;
+            }
+            else{
+                prevAnimation = currAnimation;
+            }
+        }
+        currAnimation = currAnimation->nextDamage;
+    }    
+    return; 
+}
+
+
 
 #endif

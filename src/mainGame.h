@@ -3,6 +3,9 @@
 
 #include "raylib.h"
 
+enum GameStatus{InGame, };
+
+
 void initMainGame();
 void drawMainGame();
 void endMainGame();

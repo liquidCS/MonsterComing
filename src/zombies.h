@@ -18,7 +18,7 @@ typedef struct zombieNode{
     // loot
     int dropXP;
     int dropCoin;
-    // 
+
     Vector2 position;
     Vector2 center;
     Rectangle hitbox;
@@ -27,15 +27,39 @@ typedef struct zombieNode{
 }zombie;
 
 
+// Animation Time
+#define NORMAL_DAMAGE_TIME 0.2f
+#define CRITICAL_DAMAGE_TIME 1.0f
+#define NORMAL_DAMAGE_FONTSIZE 15
+#define CRITICAL_DAMAGE_FONTSIZE 20
+#define NORMAL_DAMAGE_COLOR BLUE
+#define CRITICAL_DAMAGE_COLOR GOLD
+
+typedef enum {NORMAL, CRITICAL} damageTypes;
+typedef struct zombieDamageNode{
+    int damage;
+    Vector2 position;
+    damageTypes damageType;
+    float currTime;
+    float existTime;
+    struct zombieDamageNode *nextDamage;
+} zombieDamage;
+
+
 void initZombies(); 
 void spawnZombie(int); // create new zombie with specified type
 void killZombie(zombie *, zombie *);
 
 void drawZombies(); // draw all zombies
-void drawZombieDamageValue(zombie *, int);
 void zombieMovement(); // move zombie towards the player
 
 void zombieCheck();
+
+// Draw Zombie Damage
+void addZombieDamageAnimation(zombie *, int, damageTypes);
+void drawZombieDamageValue();
+
+
 
 // Clear All Zombies in Link list
 void freeAllZombie();

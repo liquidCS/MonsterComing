@@ -39,6 +39,9 @@ bool gameExit;
 enum PAGES {mainMenu, setting, credit};
 enum PAGES currentPage;
 
+// Sound Effects
+Sound click;
+
 // User Selections
 enum characterSelections selectedCharacter;
 
@@ -77,6 +80,9 @@ void initMenu(){
     charactersPreview[1] = LoadTexture("resources/characters/64TempCh2.png");
     charactersPreview[1] = LoadTexture("resources/characters/64TempCh3.png");
 
+    // Initialize Sound
+    click = LoadSound("resources/soundEffect/select.wav");
+
     // Initialize Pages and Careers
     currentPage = mainMenu;
     selectedCharacter = WARRIOR;
@@ -105,6 +111,7 @@ void drawMenu(){
     // Button Press Function Call and Current Page Drawing
     if(startButtonPress == true){
         // Load Main Game
+        PlaySound(click);
         initMainGame();
         initMainPlayer(currentCharacter);
         gameStart = true;
@@ -112,12 +119,14 @@ void drawMenu(){
     }
     else if(settingButtonPress == true || currentPage == setting){
         // Load Settings Menu
+        PlaySound(click);
         currentPage = setting;
         drawSettingsPage();
         if(shouldQuitSettingsPage()) currentPage = mainMenu;
     }
     else if(creditButtonPress == true || currentPage == credit){
         // Load Credit Page
+        PlaySound(click);
         currentPage = credit;
         drawCreditsPage();
         if(shouldQuitCreditsPage()) currentPage = mainMenu;

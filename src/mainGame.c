@@ -89,6 +89,7 @@ void drawMainGame(){
 
     // Draw All Zombies
     drawZombies();
+    drawZombieDamageValue();
 
     // Draw Main Player
     drawMainPlayer();

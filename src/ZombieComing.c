@@ -9,9 +9,13 @@ int main(void)
 {
     int screenWidth = GetScreenWidth();
     int screenHeight = GetScreenHeight();
+    // Init Window
     InitWindow(screenWidth, screenHeight, "ZombieComing");
     ToggleFullscreen();
     SetTargetFPS(60);
+
+    // Init Audio
+    InitAudioDevice();
 
     // Menu Initialize
     initMenu();

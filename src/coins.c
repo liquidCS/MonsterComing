@@ -8,12 +8,17 @@
 
 coin *coins, *lastCoin;
 Texture2D coinTexture;
+Sound pickUPCoinSound;
 
 void initCoins(){
     coins = (coin *)malloc(sizeof(coin));
     (*coins) = (coin){.value = -1, .nextCoin = NULL};
     lastCoin = coins;
 
+    // Load Coin Music
+    pickUPCoinSound = LoadSound("resources/soundEffect/coin.wav");
+
+    // Load Coin Texture
     coinTexture = LoadTexture("resources/spinningCoin.png");
     return;
 }
@@ -59,6 +64,7 @@ void coinPickDetect(){
     while(currCoin != NULL){
         if(currCoin->value != -1){
             if(CheckCollisionRecs((Rectangle){currCoin->position.x, currCoin->position.y, COIN_TEXTURE_WIDTH, COIN_TEXTURE_HEIGHT}, getMainPlayerHitbox())){
+                PlaySound(pickUPCoinSound);
                 addMainPlayerCoin(currCoin->value);
                 nextCoin = currCoin->nextCoin;
                 lastCoin = prevCoin;

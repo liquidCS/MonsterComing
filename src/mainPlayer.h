@@ -25,6 +25,7 @@ struct player
     int normalAttackDamage;
     float normalAttackCool;
     float normalAttackTimer;
+    float criticalHitPercentage;
 };
 
 enum MAINPLAYERSTATES {STOP, WALKING};
@@ -64,6 +65,7 @@ void setMainPlayerFacing(int);
 int getNormalAttackDamage();
 float getNormalAttackCool();
 float getNormalAttackTimer();
+float getCriticalHitPercentage();
 
 // Health
 int getMainPlayerCurrHealth();

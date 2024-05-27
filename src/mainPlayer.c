@@ -48,6 +48,7 @@ void initMainPlayer(int SELECTEDCHARACTER){
     mainPlayer.normalAttackDamage = 5;
     mainPlayer.normalAttackCool = 1;
     mainPlayer.normalAttackTimer = 0.0;
+    mainPlayer.criticalHitPercentage = 0.10;
 
     mainPlayerState = STOP;
     mainPlayerFacing = SOUTH;
@@ -203,6 +204,11 @@ float getNormalAttackCool(){
 float getNormalAttackTimer(){
     return mainPlayer.normalAttackTimer;
 }
+
+float getCriticalHitPercentage(){
+    return mainPlayer.criticalHitPercentage;
+}
+
 
 void addMainPlayerXp(int xp){
     mainPlayer.xp += xp;

@@ -49,8 +49,14 @@ void warriorNormalAttack(){
             if(CheckCollisionRecs(currZombie->hitbox, attackRange)){
                 int damage = getNormalAttackDamage();
                 currZombie->health -= damage;
-                // Draw Damage Value
-                drawZombieDamageValue(currZombie, damage);
+                // Draw Damage Value (with critical damage calculate)
+                if((rand()%100+1) <= getCriticalHitPercentage()*100){
+                    // Critical Hit
+                    addZombieDamageAnimation(currZombie, damage*2, CRITICAL);
+                }else{
+                    // Normal Hit
+                    addZombieDamageAnimation(currZombie, damage, NORMAL);
+                }
             }
         }
         currZombie = currZombie->nextZombie;

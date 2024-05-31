@@ -4,6 +4,7 @@
 #include "string.h"
 #include "mainGame.h"
 #include "mainGameGUI.h"
+#include "basic.h"
 #include <stdlib.h>
 
 
@@ -53,7 +54,13 @@ void drawGUI(){
 
     DrawRectangle(HEALTH_UI_X, HEALTH_UI_Y, HEALTH_UI_WIDTH, HEALTH_UI_HIGHT, RED);
     DrawRectangle(HEALTH_UI_X, HEALTH_UI_Y, HEALTH_UI_CURRENT_X, HEALTH_UI_HIGHT, GREEN);
-    DrawText(healthUIText, HEALTH_UI_TEXT_X, HEALTH_UI_TEXT_Y, HEALTH_UI_FONTSIZE, BLACK);
+    DrawText(healthUIText, HEALTH_UI_TEXT_X, HEALTH_UI_TEXT_Y, HEALTH_UI_FONTSIZE, BLACK);  
+
+    #if DEBUG == 1
+        char FPS[5];
+        itoa(GetFPS(), FPS, 10);
+        DrawText(FPS, getScreenCoord().x, getScreenCoord().y, 30, RED);
+    #endif
 
     return;
 }   

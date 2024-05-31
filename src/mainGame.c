@@ -7,7 +7,9 @@
 #include "basic.h"
 #include "zombies.h"
 #include "coins.h"
+#include "saveHandler.h"
 #include "mainGameGUI.h"
+#include "inGameMenu.h"
 #include <stdio.h>
 
 
@@ -26,9 +28,14 @@ void initMainGame(){
     mainCam.target = (Vector2){0, 0}; // *temporary: need to grab from player location
     mainCam.zoom = 1.0;
 
+    // init models
+    initInGameMenu();
     initCoins();
     initZombies();
 
+    // Add to Statistic
+    writeCurrStatistic(GAMESPLAYED, 1);
+    
     return;
 }
 
@@ -100,6 +107,11 @@ void drawMainGame(){
     // Draw GUI
     drawGUI();
 
+    // Draw In Game Menu
+    if(shouldDrawInGameMenu()){
+        drawInGameMenu();
+    }
+    
     // Debug
     #if DEBUG == 1
         DrawRectangleLines(getMainPlayerHitbox().x, getMainPlayerHitbox().y, getMainPlayerHitbox().width, getMainPlayerHitbox().height, RED);
@@ -112,6 +124,7 @@ void drawMainGame(){
 void endMainGame(){
     UnloadTexture(backGround);
     freeAllZombie();
+    saveCurrStatistic(); // save to files
     return;
 }
 

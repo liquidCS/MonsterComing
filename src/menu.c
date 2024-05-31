@@ -101,7 +101,7 @@ void drawMenu(){
     // Draw Buttons and Detections Player Input
     bool startButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT}, "Start Game"); 
     bool settingButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Settings");
-    bool creditButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+2*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Credit");
+    bool StatisticButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+2*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Statistic");
     bool quitButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+3*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Quit");
 
     // Character Selector
@@ -124,12 +124,12 @@ void drawMenu(){
         drawSettingsPage();
         if(shouldQuitSettingsPage()) currentPage = mainMenu;
     }
-    else if(creditButtonPress == true || currentPage == credit){
+    else if(StatisticButtonPress == true || currentPage == credit){
         // Load Credit Page
         PlaySound(click);
         currentPage = credit;
-        drawCreditsPage();
-        if(shouldQuitCreditsPage()) currentPage = mainMenu;
+        drawStatisticPage();
+        if(shouldQuitStatisticPage()) currentPage = mainMenu;
     }
     else if(quitButtonPress == true){
         // Exit

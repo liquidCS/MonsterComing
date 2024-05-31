@@ -7,6 +7,8 @@
 #include "mainPlayer.h"
 #include "mainGame.h"
 #include "zombies.h"
+#include "inGameMenu.h"
+#include "basic.h"
 
 #define FOURTYFIVE_DEGREE 0.785398163397448309
 
@@ -68,13 +70,25 @@ void inputHandle(){
 
 
 void otherKeyDetection(){
+    // In Game Menu
+    if(IsKeyPressed(KEY_M)){
+        if(shouldDrawInGameMenu()){
+            stopDrawingInGameMenu();
+        }
+        else{
+            startDrawingInGameMenu();
+        }
+    }
+
+    // Noraml Attack 
     if(IsKeyDown(KEY_SPACE)){
         normalAttack();
     }
     
-    // temp: spawn zombie
-    if(IsKeyDown(KEY_S)){
-        spawnZombie(ZTEMP1);
-    }
-
+    // DEBUG Spawn zombie
+    #if DEBUG == 1
+        if(IsKeyDown(KEY_S)){
+            spawnZombie(ZTEMP1);
+        }
+    #endif
 }

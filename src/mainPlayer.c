@@ -34,7 +34,7 @@ void initMainPlayer(int SELECTEDCHARACTER){
     mainPlayer.character = SELECTEDCHARACTER;
 
     // may be different with different character
-    mainPlayer.animationChangeRate = 0.2;
+    mainPlayer.animationChangeRate = 0.1;
     // Implying the Sizeof the Character
     mainPlayer.hitbox = (Rectangle) {0, 0, 64*1.2, 64*1.2}; 
     mainPlayer.center = (Vector2){PLAYER_START_X + mainPlayer.hitbox.width/2, PLAYER_START_Y + mainPlayer.hitbox.height/2};

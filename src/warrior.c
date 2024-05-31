@@ -6,6 +6,7 @@
 #include "zombies.h"
 #include "mainPlayer.h"
 #include "basic.h"
+#include "saveHandler.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -53,9 +54,13 @@ void warriorNormalAttack(){
                 if((rand()%100+1) <= getCriticalHitPercentage()*100){
                     // Critical Hit
                     addZombieDamageAnimation(currZombie, damage*2, CRITICAL);
+                    // Add to Statistic
+                    writeCurrStatistic(DAMAGEDMADE, damage*2);
                 }else{
                     // Normal Hit
                     addZombieDamageAnimation(currZombie, damage, NORMAL);
+                    // Add to Statistic
+                    writeCurrStatistic(DAMAGEDMADE, damage);
                 }
             }
         }

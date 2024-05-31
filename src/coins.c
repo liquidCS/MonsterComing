@@ -3,6 +3,7 @@
 
 #include "coins.h"
 #include "mainPlayer.h"
+#include "saveHandler.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -64,8 +65,13 @@ void coinPickDetect(){
     while(currCoin != NULL){
         if(currCoin->value != -1){
             if(CheckCollisionRecs((Rectangle){currCoin->position.x, currCoin->position.y, COIN_TEXTURE_WIDTH, COIN_TEXTURE_HEIGHT}, getMainPlayerHitbox())){
+                // Add to statistic
+                writeCurrStatistic(COINSEARNED, currCoin->value);                
+                // Play Coin Sound
                 PlaySound(pickUPCoinSound);
+                // Add to Current Coin Count
                 addMainPlayerCoin(currCoin->value);
+                // Delete Coin
                 nextCoin = currCoin->nextCoin;
                 lastCoin = prevCoin;
                 deleteCoin(prevCoin, currCoin);

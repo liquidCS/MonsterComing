@@ -9,6 +9,7 @@
 #include "coins.h"
 #include "mainPlayer.h"
 #include "basic.h"
+#include "saveHandler.h"
 
 
 // Save All Zombie Texture
@@ -65,6 +66,8 @@ void spawnZombie(int zombieType){
 }
 
 void killZombie(zombie *priorZombie, zombie *targetZombie){
+    // Add to Statistic
+    writeCurrStatistic(ZOMBIESKILLED, 1);
     // Drop Coins
     spawnCoin(targetZombie->center, targetZombie->dropCoin);
     // free Zombie
@@ -84,7 +87,9 @@ void drawZombies(){
                 DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, ((float)currZombie->health/currZombie->maxHealth)*currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, GREEN);
             }
             
-            if(DEBUG == 1) DrawRectangleLines(currZombie->hitbox.x, currZombie->hitbox.y, currZombie->hitbox.width, currZombie->hitbox.height, RED);
+            #if DEBUG == 1
+                DrawRectangleLines(currZombie->hitbox.x, currZombie->hitbox.y, currZombie->hitbox.width, currZombie->hitbox.height, RED);
+            #endif
         }
         // Next Zombie Node
         currZombie = currZombie->nextZombie;

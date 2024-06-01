@@ -19,12 +19,18 @@ struct player
     int level;
     int xp;
     int coins;
+    // Health
     int currHealth;
     int maxHealth;
     // Attacks
     int normalAttackDamage;
     float normalAttackCool;
     float normalAttackTimer;
+
+    int specialAttackDamage;
+    float specialAttackCool;
+    float specialAttackTimer;
+
     float criticalHitPercentage;
 };
 
@@ -37,7 +43,9 @@ void drawMainPlayer();
 void timerUpdate();
 
 void normalAttack();
+void specialAttack();
 void drawAttack(); 
+
 
 // update Hitbox to current mainPlayer.location;
 void updateMainPlayerHitbox2Loc();
@@ -65,7 +73,13 @@ void setMainPlayerFacing(int);
 int getNormalAttackDamage();
 float getNormalAttackCool();
 float getNormalAttackTimer();
+
+int getSpecialAttackDamage();
+float getSpecialAttackCool();
+float getSpecialAttackTimer();
+
 float getCriticalHitPercentage();
+
 
 // Health
 int getMainPlayerCurrHealth();

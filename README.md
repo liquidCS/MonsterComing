@@ -25,10 +25,11 @@ Install raylib from [raylib.com](https://www.raylib.com/) before compiling and r
 3. compiling using `gcc -o ZombieComing.exe ZombieComing.c mainGame.c menu.c menuPages.c mainGameGUI.c inGameMenu.c mainPlayer.c zombies.c inputHandler.c warrior.c ninja.c witch.c coins.c saveHandler.c gameMath.c -lraylib -lgdi32 -lwinmm  `
 4. run using `./ZombieComing` to start the game.
 ## Controlling
- - Navigate Menu: `using mouse to navigate and  click`
+ - Navigate Menu: `using mouse to navigate and click`
  - Player Movement: `press '↑', '↓', '←', '→' `
  - In Game Menu: `press 'M'`
- - Normal Attack: `press '_space_'`
+ - Normal Attack: `press '_SPACE_'`
+ - Special Attack: `press '_LEFT_SHIFT_'`
  - Debugging
 	 - spawn zombie: `press 'S' `
 

@@ -12,17 +12,21 @@
 
 // Coin
 #define COIN_UI_FONT_SIZE 20
-#define COIN_UI_HIGHT 110
+#define COIN_UI_HIGHT 130
 
 // Normal Attack Cool Down
 #define N_ATTACK_UI_FONTSIZE 20
-#define HEALTH_UI_X2BOTTOM 20
 #define N_ATTACK_UI_HIGHT 25
 #define N_ATTACK_UI_WIDTH 500
 
+// Special Attack Timer
+#define S_ATTACK_UI_FONTSIZE 20
+#define S_ATTACK_UI_HIGHT 25
+#define S_ATTACK_UI_WIDTH 500
+
 // Health
 #define HEALTH_UI_FONTSIZE 20
-#define HEALTH_UI_X2BOTTOM 20
+#define HEALTH_UI_X2BOTTOM 10
 #define HEALTH_UI_HIGHT 25
 #define HEALTH_UI_WIDTH 500
 

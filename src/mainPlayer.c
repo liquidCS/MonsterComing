@@ -50,6 +50,10 @@ void initMainPlayer(int SELECTEDCHARACTER){
     mainPlayer.normalAttackTimer = 0.0;
     mainPlayer.criticalHitPercentage = 0.10;
 
+    mainPlayer.specialAttackDamage = 10;
+    mainPlayer.specialAttackCool = 30.0;
+    mainPlayer.specialAttackTimer = 0.0;
+
     mainPlayerState = STOP;
     mainPlayerFacing = SOUTH;
     
@@ -109,6 +113,12 @@ void timerUpdate(){
     // Normal Attack
     mainPlayer.normalAttackTimer += GetFrameTime();
     if(mainPlayer.normalAttackTimer > mainPlayer.normalAttackCool) mainPlayer.normalAttackTimer = mainPlayer.normalAttackCool;
+
+    // Special Attack
+    mainPlayer.specialAttackTimer += GetFrameTime();
+    if(mainPlayer.specialAttackTimer > mainPlayer.specialAttackCool) mainPlayer.specialAttackTimer = mainPlayer.specialAttackCool;
+
+
 }
 
 void drawAttack(){
@@ -141,6 +151,27 @@ void normalAttack(){
     else if(mainPlayer.character == WITCH){
         witchNormalAttack();
     }
+    return;
+}
+
+
+void specialAttack(){
+    if(mainPlayer.specialAttackTimer < getSpecialAttackCool())
+        return;
+    else
+        mainPlayer.specialAttackTimer = 0.0;
+
+    if(mainPlayer.character == WARRIOR){
+        warriorSpecialAttack();
+    }
+    else if(mainPlayer.character == NINJA){
+        // ninjaSpecialAttack();
+    }
+    else if(mainPlayer.character == WITCH){
+        // witchSpecialAttack();
+    }
+    
+    return;
 }
 
 // function for modifying and get player variables
@@ -209,6 +240,17 @@ float getCriticalHitPercentage(){
     return mainPlayer.criticalHitPercentage;
 }
 
+float getSpecialAttackCool(){
+    return mainPlayer.specialAttackCool;
+}
+
+float getSpecialAttackTimer(){
+    return mainPlayer.specialAttackTimer;
+}
+
+int getSpecialAttackDamage(){
+    return mainPlayer.specialAttackDamage;
+}
 
 void addMainPlayerXp(int xp){
     mainPlayer.xp += xp;

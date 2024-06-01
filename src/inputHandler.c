@@ -72,19 +72,20 @@ void inputHandle(){
 void otherKeyDetection(){
     // In Game Menu
     if(IsKeyPressed(KEY_M)){
-        if(shouldDrawInGameMenu()){
+        if(shouldDrawInGameMenu())
             stopDrawingInGameMenu();
-        }
-        else{
+        else
             startDrawingInGameMenu();
-        }
     }
 
     // Noraml Attack 
     if(IsKeyDown(KEY_SPACE)){
         normalAttack();
     }
-    
+    if(IsKeyDown(KEY_LEFT_SHIFT)){
+        specialAttack();
+    }
+
     // DEBUG Spawn zombie
     #if DEBUG == 1
         if(IsKeyDown(KEY_S)){

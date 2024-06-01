@@ -23,7 +23,7 @@ void drawGUI(){
     
     // Draw Normal Attack Cool Down
     const int N_ATTACK_UI_X = getScreenCoord().x + GetScreenWidth()/2 - N_ATTACK_UI_WIDTH/2;
-    const int N_ATTACK_UI_Y = getScreenCoord().y + GetScreenHeight() - (HEALTH_UI_X2BOTTOM + HEALTH_UI_HIGHT) - UI_GAP - N_ATTACK_UI_HIGHT;
+    const int N_ATTACK_UI_Y = getScreenCoord().y + GetScreenHeight() - (HEALTH_UI_X2BOTTOM + HEALTH_UI_HIGHT*2) - UI_GAP*2 - N_ATTACK_UI_HIGHT;
     const int N_ATTACK_UI_CURRENT_X = N_ATTACK_UI_WIDTH*(getNormalAttackTimer()/getNormalAttackCool());    
 
     char N_ATTACK_UI_TEXT[20];
@@ -36,6 +36,23 @@ void drawGUI(){
     DrawRectangle(N_ATTACK_UI_X, N_ATTACK_UI_Y, N_ATTACK_UI_CURRENT_X, N_ATTACK_UI_HIGHT, GRAY);
     DrawText(N_ATTACK_UI_TEXT, N_ATTACK_UI_TEXT_X, N_ATTACK_UI_TEXT_Y, N_ATTACK_UI_FONTSIZE, DARKGRAY);
 
+    // Draw Special Attack Timer
+    const int S_ATTACK_UI_X = getScreenCoord().x + GetScreenWidth()/2 - S_ATTACK_UI_WIDTH/2;
+    const int S_ATTACK_UI_Y = getScreenCoord().y + GetScreenHeight() - (HEALTH_UI_X2BOTTOM + HEALTH_UI_HIGHT) - UI_GAP - S_ATTACK_UI_HIGHT;
+    const int S_ATTACK_UI_CURRENT_X = S_ATTACK_UI_WIDTH*(getSpecialAttackTimer()/getSpecialAttackCool());    
+
+    char S_ATTACK_UI_TEXT[20];
+    sprintf(S_ATTACK_UI_TEXT, "%f", getSpecialAttackCool()-getSpecialAttackTimer());
+    const int S_ATTACK_UI_TEXT_WIDTH = MeasureText(S_ATTACK_UI_TEXT, S_ATTACK_UI_FONTSIZE);
+    const int S_ATTACK_UI_TEXT_X = getScreenCoord().x + GetScreenWidth()/2 - S_ATTACK_UI_TEXT_WIDTH/2;
+    const int S_ATTACK_UI_TEXT_Y = S_ATTACK_UI_Y + (S_ATTACK_UI_HIGHT-S_ATTACK_UI_FONTSIZE)/2;
+
+    DrawRectangle(S_ATTACK_UI_X, S_ATTACK_UI_Y, S_ATTACK_UI_WIDTH, S_ATTACK_UI_HIGHT, GRAY);
+    DrawRectangle(S_ATTACK_UI_X, S_ATTACK_UI_Y, S_ATTACK_UI_CURRENT_X, S_ATTACK_UI_HIGHT, ORANGE);
+    DrawText(S_ATTACK_UI_TEXT, S_ATTACK_UI_TEXT_X, S_ATTACK_UI_TEXT_Y, S_ATTACK_UI_FONTSIZE, DARKGRAY);
+    
+    
+    
     // Draw Health
     const int HEALTH_UI_X = getScreenCoord().x + GetScreenWidth()/2 - HEALTH_UI_WIDTH/2; // Health UI Location
     const int HEALTH_UI_Y = getScreenCoord().y + GetScreenHeight() - (HEALTH_UI_X2BOTTOM + HEALTH_UI_HIGHT);

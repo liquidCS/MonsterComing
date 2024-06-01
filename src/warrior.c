@@ -11,8 +11,8 @@
 #include <stdio.h>
 
 
-Vector2 normalAnimationCenter;
-Texture2D normalAttackTexture;
+Vector2 normalAnimationCenter, specialAnimationCenter;
+Texture2D normalAttackTexture, specialAnimationTexture;
 
 void initWarriorAttack(){
     normalAttackTexture = LoadTexture("resources/WarriorNormalAttack.png");
@@ -85,5 +85,63 @@ void drawWarriorNormalAnimation(bool newAttack){
 
     return;
 }
+
+
+
+void warriorSpecialAttack(){
+    zombie *currZombie = getZombies();
+    enum MAINPLAYERFACING facing = getMainPlayerFacing();
+    Rectangle attackRange;
+
+    // Generate Attack Range
+    if(facing == NORTH){
+        attackRange = (Rectangle){getMainPlayerCenter().x - SPECIAL_ATTACK_HEIGHT/2, getMainPlayerCenter().y - SPECIAL_ATTACK_WIDTH, SPECIAL_ATTACK_HEIGHT, SPECIAL_ATTACK_WIDTH};
+        setMainPlayerLoc((Vector2){getMainPlayerLoc().x, getMainPlayerLoc().y - SPECIAL_ATTACK_WIDTH});
+    }
+    else if(facing == WEST){
+        attackRange = (Rectangle){getMainPlayerCenter().x - SPECIAL_ATTACK_WIDTH, getMainPlayerCenter().y - SPECIAL_ATTACK_HEIGHT/2, SPECIAL_ATTACK_WIDTH, SPECIAL_ATTACK_HEIGHT};
+        setMainPlayerLoc((Vector2){getMainPlayerLoc().x - SPECIAL_ATTACK_WIDTH, getMainPlayerLoc().y});
+    }
+    else if(facing == EAST){
+        attackRange = (Rectangle){getMainPlayerCenter().x, getMainPlayerCenter().y - SPECIAL_ATTACK_HEIGHT/2, SPECIAL_ATTACK_WIDTH, SPECIAL_ATTACK_HEIGHT};
+        setMainPlayerLoc((Vector2){getMainPlayerLoc().x + SPECIAL_ATTACK_WIDTH, getMainPlayerLoc().y});
+    }
+    else if(facing == SOUTH){
+        attackRange = (Rectangle){getMainPlayerCenter().x - SPECIAL_ATTACK_HEIGHT/2, getMainPlayerCenter().y, SPECIAL_ATTACK_HEIGHT, SPECIAL_ATTACK_WIDTH};
+        setMainPlayerLoc((Vector2){getMainPlayerLoc().x, getMainPlayerLoc().y + SPECIAL_ATTACK_WIDTH});
+    }
+
+    // For Attack Animation Position
+    specialAnimationCenter = (Vector2){attackRange.x + attackRange.width/2, attackRange.y + attackRange.height/2};
+    drawWarriorSpecialAnimation(true);
+
+    if(DEBUG == 1)
+        DrawRectangleLines((int)attackRange.x, (int)attackRange.y, (int)attackRange.width, (int)attackRange.height, RED);
+    
+    // Check if Zombie is in Attack Range
+    while(currZombie != NULL){
+        if(currZombie->zombieType != FIRSTNODEZOMBIE){
+            if(CheckCollisionRecs(currZombie->hitbox, attackRange)){
+                int damage = getSpecialAttackDamage();
+                currZombie->health -= damage;
+                // Draw Damage Value (with critical damage calculate)
+                addZombieDamageAnimation(currZombie, damage, NORMAL);
+                // Add to Statistic
+                writeCurrStatistic(DAMAGEDMADE, damage);
+            }
+        }
+        currZombie = currZombie->nextZombie;
+    }    
+
+    return;
+}
+
+
+void drawWarriorSpecialAnimation(bool newAttack){
+    return;
+}
+
+
+
 
 #endif

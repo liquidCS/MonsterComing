@@ -30,8 +30,8 @@ void initZombies(){
     damageAnimation = (zombieDamage *)malloc(sizeof(zombieDamage));
     (*damageAnimation) = (zombieDamage){.damage = -1};
     // Load Texture
-    zombieTextures[LEVEL1V1] = LoadTexture("resources/zombies/tempZombie.png");
-    zombieTextures[LEVEL1V2] = LoadTexture("resources/zombies/tempZombie.png");
+    zombieTextures[LEVEL1V1] = LoadTexture("resources/zombies/zombie1.png");
+    zombieTextures[LEVEL1V2] = LoadTexture("resources/zombies/zombie2.png");
 
     return;
 }
@@ -46,7 +46,6 @@ zombie * createNewZombie(int zombieType, Vector2 position){
         newZombie -> dropXP = 10;
         newZombie -> dropCoin = 1;
         newZombie -> position = position;
-        newZombie -> hitbox = (Rectangle) {position.x, position.y, 32.0f, 32.0f};
     }
     else if(zombieType == LEVEL1V2){
         newZombie -> zombieType = zombieType;
@@ -56,9 +55,8 @@ zombie * createNewZombie(int zombieType, Vector2 position){
         newZombie -> dropXP = 20;
         newZombie -> dropCoin = 2;
         newZombie -> position = position;
-        newZombie -> hitbox = (Rectangle) {position.x, position.y, 32.0f, 32.0f};
-   
     }
+    newZombie -> hitbox = (Rectangle) {position.x, position.y, ZOMBIE_SIZE, ZOMBIE_SIZE};
     newZombie -> center = (Vector2){newZombie->position.x + newZombie->hitbox.width/2, newZombie->position.y + newZombie->hitbox.height/2};
     newZombie -> nextZombie = NULL;
     ZombieCount++; // Add 1 Zombie to Count
@@ -89,18 +87,31 @@ void killZombie(zombie *priorZombie, zombie *targetZombie){
 }
 
 void drawZombies(){
+    static int currFrame = 0;
+    static float currTime = 0.0f;
     zombie * currZombie = zombies;
+    
+    // Calculate with Frame to Draw
+    currTime += GetFrameTime();
+    if(currTime >= ZOMBIE_ANIMATION_TIME){
+        currTime = 0.0f;
+        currFrame = currFrame + 1 >= ZOMBIE_FRAMES ? 0 : currFrame+1;
+    }
+
+    // Draw Zombies
     while(currZombie != NULL){
         if(currZombie->zombieType != FIRSTNODEZOMBIE){
-            // Draw Zombie Texture
-            DrawTexture(zombieTextures[currZombie->zombieType], currZombie->position.x, currZombie->position.y, WHITE);
+            // Draw Zombie Texture with Animation
+            Rectangle source = { currFrame*ZOMBIE_SIZE, currZombie->facing*ZOMBIE_SIZE, ZOMBIE_SIZE, ZOMBIE_SIZE};
+            Rectangle dest = {currZombie->position.x, currZombie->position.y, ZOMBIE_SIZE, ZOMBIE_SIZE};
+            DrawTexturePro(zombieTextures[currZombie->zombieType], source, dest, (Vector2){0, 0}, 0, WHITE);
+            
+            // Draw Zombie health if zombie isn't at max health
             if(currZombie->health != currZombie->maxHealth){
                 DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, RED);
                 DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, ((float)currZombie->health/currZombie->maxHealth)*currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, GREEN);
             }
-            // Draw Zombie On Mini Map
-            DrawPixel(getMiniMapLoc().x + currZombie->position.x/getMainGameBackGround().width, getMiniMapLoc().y + currZombie->position.y/getMainGameBackGround().height, RED);
-            
+
             #if DEBUG == 1
                 DrawRectangleLines(currZombie->hitbox.x, currZombie->hitbox.y, currZombie->hitbox.width, currZombie->hitbox.height, RED);
             #endif
@@ -118,11 +129,18 @@ void zombieMovement(){
     while(currZombie != NULL){
         if(currZombie->zombieType != FIRSTNODEZOMBIE) {
             oldPosition = currZombie->position;
+            // calculate direction to player
             float radian = atanf(fabs((getMainPlayerCenter().y - currZombie->center.y)/(getMainPlayerCenter().x - currZombie->center.x)));
             float x = getMainPlayerCenter().x - currZombie->center.x > 0 ? 1.0 : -1.0;
             float y = getMainPlayerCenter().y - currZombie->center.y > 0 ? 1.0 : -1.0;
             currZombie->position.x += currZombie->speed*cos(radian)*dt*x;
             currZombie->position.y += currZombie->speed*sin(radian)*dt*y;
+
+            // update zombie facing direction
+            if(x >= 0)
+                currZombie->facing = RIGHT;
+            else
+                currZombie->facing = LEFT;
         }
 
         // Update Hitbox

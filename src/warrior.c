@@ -15,7 +15,7 @@ Vector2 normalAnimationCenter, specialAnimationCenter;
 Texture2D normalAttackTexture, specialAnimationTexture;
 
 void initWarriorAttack(){
-    normalAttackTexture = LoadTexture("resources/WarriorNormalAttack.png");
+    normalAttackTexture = LoadTexture("resources/characters/warriorAttackEffect.png");
 }
 
 void warriorNormalAttack(){
@@ -73,15 +73,27 @@ void warriorNormalAttack(){
 // Draw Normal Attack Animation
 void drawWarriorNormalAnimation(bool newAttack){
     static float currTime = 0.0;
-
+    static int i = 0; // curr image count
     currTime += GetFrameTime();
     if(currTime >= ANIMATION_TIME) currTime = ANIMATION_TIME;
 
-    if(newAttack) currTime = 0.0; // if there is a new attack reset rimer
-
+    if(newAttack){
+        currTime = 0.0; // if there is a new attack reset rimer
+        i = 0;
+    }
     if(currTime < ANIMATION_TIME){
-        DrawCircleLines(normalAnimationCenter.x, normalAnimationCenter.y, 30.0, RED);   
-        DrawTexture(normalAttackTexture, normalAnimationCenter.x - normalAttackTexture.width/2, normalAnimationCenter.y - normalAttackTexture.height/2, WHITE );
+        #if DEBUG == 1
+            DrawCircleLines(normalAnimationCenter.x, normalAnimationCenter.y, 30.0, RED);
+        #endif 
+
+        if(currTime >= (ANIMATION_TIME/ANIMATION_FRAMES)*i){ // calcuation with frame to draw
+            i++; 
+            i = i >= ANIMATION_FRAMES ? 0 : i;
+        }
+        Rectangle Source = {ANIMATION_SIZE*i, getMainPlayerFacing()*ANIMATION_SIZE, ANIMATION_SIZE, ANIMATION_SIZE};
+        Rectangle Dest = {normalAnimationCenter.x - ANIMATION_SIZE/2, normalAnimationCenter.y - ANIMATION_SIZE/2, ANIMATION_SIZE*1.5, ANIMATION_SIZE*1.5};
+        DrawTexturePro(normalAttackTexture, Source, Dest, (Vector2){0, 0}, 0, WHITE);  
+        // DrawTexture(normalAttackTexture, normalAnimationCenter.x - normalAttackTexture.width/2, normalAnimationCenter.y - normalAttackTexture.height/2, WHITE );
     }
 
     return;

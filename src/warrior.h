@@ -11,7 +11,10 @@
 #define SPECIAL_ATTACK_WIDTH 300
 #define SPECIAL_ATTACK_HEIGHT 50
 
-#define ANIMATION_TIME 2
+#define ANIMATION_FRAMES 20
+#define ANIMATION_TIME 0.5f
+#define ANIMATION_SIZE 64
+
 
 void initWarriorAttack();
 

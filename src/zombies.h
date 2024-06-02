@@ -2,13 +2,14 @@
 #define ZOMBIES_H
 
 #include "raylib.h"
+#include "mainPlayer.h"
 
 #define ZombieTypesCount 2
 enum zombieTypes {LEVEL1V1, LEVEL1V2, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for identification for the first node of zombies
 
 // For Zombie Health Bar
 #define LEVEL1_HEALTHBAR_HEIGHT 5
-
+typedef enum {RIGHT, LEFT} ZOMBIE_FACING;
 
 typedef struct zombieNode{
     int zombieType; // enum zombieTypes
@@ -22,10 +23,18 @@ typedef struct zombieNode{
     Vector2 position;
     Vector2 center;
     Rectangle hitbox;
+
+    // Draw and Animation
+    ZOMBIE_FACING facing;
+
     // Link list of zombie
     struct zombieNode *nextZombie;
 }zombie;
 
+// Zombie
+#define ZOMBIE_SIZE 64
+#define ZOMBIE_FRAMES 4
+#define ZOMBIE_ANIMATION_TIME 0.2f // for one cycle
 
 // Animation Time
 #define NORMAL_DAMAGE_TIME 0.2f

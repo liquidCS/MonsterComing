@@ -30,8 +30,22 @@
 #define HEALTH_UI_HIGHT 25
 #define HEALTH_UI_WIDTH 500
 
+// Waves Information
+#define WAVES_FONTSIZE 20
+#define MEXTWAVE_TEXT_LENGTH 200
+#define WAVE_GAP2SCREENTOP 5
+#define WAVE_GAP 25
 
+// MINI MAP
+#define MINIMAP_WIDTH 240
+#define MINIMAP_HEIGHT 135
+
+
+
+
+void initGameGUI();
 void drawGUI();
+Vector2 getMiniMapLoc();
 
 
 #endif

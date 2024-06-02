@@ -91,6 +91,10 @@ void coinPickDetect(){
 }
 
 
+coin *getCoins(){
+    return coins;
+}
+
 void deleteCoin(coin *prevCoin, coin *targetCoin){
     prevCoin->nextCoin = targetCoin->nextCoin;
     free(targetCoin);

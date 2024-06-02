@@ -11,4 +11,9 @@ int calUpgradeCost(int level){
     return cost;
 }
 
+float degree2radian(int degrees){
+    float radians = degrees * PI / 180.0;
+    return radians;
+}
+
 #endif

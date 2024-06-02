@@ -89,7 +89,7 @@ void otherKeyDetection(){
     // DEBUG Spawn zombie
     #if DEBUG == 1
         if(IsKeyDown(KEY_S)){
-            spawnZombie(ZTEMP1);
+            spawnZombie(LEVEL1V1, getMainPlayerLoc());
         }
     #endif
 }

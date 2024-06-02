@@ -4,7 +4,7 @@
 #include "raylib.h"
 
 #define ZombieTypesCount 2
-enum zombieTypes {ZTEMP1, ZTEMP2, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for identification for the first node of zombies
+enum zombieTypes {LEVEL1V1, LEVEL1V2, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for identification for the first node of zombies
 
 // For Zombie Health Bar
 #define LEVEL1_HEALTHBAR_HEIGHT 5
@@ -12,12 +12,12 @@ enum zombieTypes {ZTEMP1, ZTEMP2, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for ide
 
 typedef struct zombieNode{
     int zombieType; // enum zombieTypes
-    int maxHealth;
-    int health;
+    int maxHealth; // Maxium Zombie Health
+    int health; // Current Zombie Health
     float speed; // pixel per sec (PPS)
     // loot
-    int dropXP;
-    int dropCoin;
+    int dropXP; // Amount of XP Drop When Killed
+    int dropCoin; // Amount of coins Drop When Killed
 
     Vector2 position;
     Vector2 center;
@@ -46,24 +46,28 @@ typedef struct zombieDamageNode{
 } zombieDamage;
 
 
-void initZombies(); 
-void spawnZombie(int); // create new zombie with specified type
+void initZombies(); // init texture, sound...
+void spawnZombie(int, Vector2); // create new zombie with specified type
 void killZombie(zombie *, zombie *);
 
 void drawZombies(); // draw all zombies
 void zombieMovement(); // move zombie towards the player
 
-void zombieCheck();
+void zombieCheck(); // check if zombie died
 
 // Draw Zombie Damage
-void addZombieDamageAnimation(zombie *, int, damageTypes);
-void drawZombieDamageValue();
+void addZombieDamageAnimation(zombie *, int, damageTypes); // add new zombie Damage Value
+void drawZombieDamageValue(); // draw existed zombie damage value
 
 
 
 // Clear All Zombies in Link list
 void freeAllZombie();
 
-zombie * getZombies();
+zombie * getZombies(); // get Zombie Link list
+
+int getZombieCount(); // get Alive Zombie Number
+
+
 
 #endif

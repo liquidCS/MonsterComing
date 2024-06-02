@@ -70,6 +70,7 @@ void warriorNormalAttack(){
     return;
 }
 
+// Draw Normal Attack Animation
 void drawWarriorNormalAnimation(bool newAttack){
     static float currTime = 0.0;
 

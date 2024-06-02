@@ -2,6 +2,7 @@
 #define MAINPLAYER_C
 
 #include "raylib.h"
+#include "mainGame.h"
 #include "mainPlayer.h"
 #include "basic.h"
 
@@ -9,16 +10,13 @@
 #include "ninja.h"
 #include "witch.h"
 
-#define PLAYER_START_X 0
-#define PLAYER_START_Y 0
-
 struct player mainPlayer;
 enum MAINPLAYERSTATES mainPlayerState;
 enum MAINPLAYERFACING mainPlayerFacing;
 
 // Init Main Player, Load in Character Texture 
 void initMainPlayer(int SELECTEDCHARACTER){
-    mainPlayer.position = (Vector2){PLAYER_START_X, PLAYER_START_Y};
+    mainPlayer.position = (Vector2){getMainGameBackGround().width/2, getMainGameBackGround().height/2};
 
     // Load Texture For Selected Character
     if(SELECTEDCHARACTER == WARRIOR){
@@ -37,8 +35,8 @@ void initMainPlayer(int SELECTEDCHARACTER){
     mainPlayer.animationChangeRate = 0.1;
     // Implying the Sizeof the Character
     mainPlayer.hitbox = (Rectangle) {0, 0, 64*1.2, 64*1.2}; 
-    mainPlayer.center = (Vector2){PLAYER_START_X + mainPlayer.hitbox.width/2, PLAYER_START_Y + mainPlayer.hitbox.height/2};
-    mainPlayer.speed = 1000.0;
+    mainPlayer.center = (Vector2){getMainGameBackGround().width/2 + mainPlayer.hitbox.width/2, getMainGameBackGround().height/2 + mainPlayer.hitbox.height/2};
+    mainPlayer.speed = 250.0;
 
     // Health
     mainPlayer.maxHealth = 100;

@@ -10,6 +10,7 @@
 #include "saveHandler.h"
 #include "mainGameGUI.h"
 #include "inGameMenu.h"
+#include "zombieWaves.h"    
 #include <stdio.h>
 
 
@@ -20,7 +21,7 @@ Vector2 screenCoord;
 // Load Texture, Sound and Initialize Valuables
 void initMainGame(){
     // Load Background
-    backGround = LoadTexture("resources/tempMap.png");
+    backGround = LoadTexture("resources/MAP01.png");
 
     // Initialize Camera
     mainCam.offset = (Vector2){0, 0};
@@ -32,6 +33,7 @@ void initMainGame(){
     initInGameMenu();
     initCoins();
     initZombies();
+    initGameGUI();
 
     // Add to Statistic
     writeCurrStatistic(GAMESPLAYED, 1);
@@ -80,6 +82,9 @@ void drawMainGame(){
 
     // Update Zombie Movement
     zombieMovement();
+
+    // Wave Loop
+    waveLoop();
 
     // Handle Input
     inputHandle();

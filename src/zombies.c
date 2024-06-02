@@ -10,13 +10,14 @@
 #include "mainPlayer.h"
 #include "basic.h"
 #include "saveHandler.h"
-
+#include "mainGameGUI.h"
 
 // Save All Zombie Texture
 Texture2D zombieTextures[ZombieTypesCount];
 // Zombies
 zombie *zombies, *lastZombie;
 zombieDamage *damageAnimation;
+int ZombieCount;
 
 
 void initZombies(){
@@ -29,36 +30,45 @@ void initZombies(){
     damageAnimation = (zombieDamage *)malloc(sizeof(zombieDamage));
     (*damageAnimation) = (zombieDamage){.damage = -1};
     // Load Texture
-    zombieTextures[ZTEMP1] = LoadTexture("resources/zombies/tempZombie.png");
-    
+    zombieTextures[LEVEL1V1] = LoadTexture("resources/zombies/tempZombie.png");
+    zombieTextures[LEVEL1V2] = LoadTexture("resources/zombies/tempZombie.png");
 
     return;
 }
 
 zombie * createNewZombie(int zombieType, Vector2 position){
     zombie *newZombie = (zombie *)malloc(sizeof(zombie));
-    if(zombieType == ZTEMP1){
+    if(zombieType == LEVEL1V1){
         newZombie -> zombieType = zombieType;
         newZombie -> maxHealth = 10;
         newZombie -> health = 10;
         newZombie -> speed = 50;
-        
         newZombie -> dropXP = 10;
         newZombie -> dropCoin = 1;
-        
         newZombie -> position = position;
         newZombie -> hitbox = (Rectangle) {position.x, position.y, 32.0f, 32.0f};
     }
+    else if(zombieType == LEVEL1V2){
+        newZombie -> zombieType = zombieType;
+        newZombie -> maxHealth = 20;
+        newZombie -> health = 20;
+        newZombie -> speed = 55;
+        newZombie -> dropXP = 20;
+        newZombie -> dropCoin = 2;
+        newZombie -> position = position;
+        newZombie -> hitbox = (Rectangle) {position.x, position.y, 32.0f, 32.0f};
+   
+    }
     newZombie -> center = (Vector2){newZombie->position.x + newZombie->hitbox.width/2, newZombie->position.y + newZombie->hitbox.height/2};
     newZombie -> nextZombie = NULL;
+    ZombieCount++; // Add 1 Zombie to Count
     return newZombie;
 }
 
-void spawnZombie(int zombieType){
+void spawnZombie(int zombieType, Vector2 position){
     // Create New Zombie and Add it to Link List
-    if(zombieType == ZTEMP1){
-        lastZombie->nextZombie = createNewZombie(ZTEMP1, getMainPlayerLoc());
-    }
+
+    lastZombie->nextZombie = createNewZombie(zombieType, position);
     // Update lastZombie to newly created zombie
     lastZombie = lastZombie->nextZombie;
 
@@ -74,6 +84,7 @@ void killZombie(zombie *priorZombie, zombie *targetZombie){
     priorZombie->nextZombie = targetZombie->nextZombie;
     lastZombie = priorZombie;
     free(targetZombie);
+    ZombieCount--; // Decrease 1 Zombie Count
     return;
 }
 
@@ -81,11 +92,14 @@ void drawZombies(){
     zombie * currZombie = zombies;
     while(currZombie != NULL){
         if(currZombie->zombieType != FIRSTNODEZOMBIE){
+            // Draw Zombie Texture
             DrawTexture(zombieTextures[currZombie->zombieType], currZombie->position.x, currZombie->position.y, WHITE);
             if(currZombie->health != currZombie->maxHealth){
                 DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, RED);
                 DrawRectangle(currZombie->position.x, currZombie->position.y - LEVEL1_HEALTHBAR_HEIGHT, ((float)currZombie->health/currZombie->maxHealth)*currZombie->hitbox.width, LEVEL1_HEALTHBAR_HEIGHT, GREEN);
             }
+            // Draw Zombie On Mini Map
+            DrawPixel(getMiniMapLoc().x + currZombie->position.x/getMainGameBackGround().width, getMiniMapLoc().y + currZombie->position.y/getMainGameBackGround().height, RED);
             
             #if DEBUG == 1
                 DrawRectangleLines(currZombie->hitbox.x, currZombie->hitbox.y, currZombie->hitbox.width, currZombie->hitbox.height, RED);
@@ -205,6 +219,10 @@ void drawZombieDamageValue(){
         currAnimation = currAnimation->nextDamage;
     }    
     return; 
+}
+
+int getZombieCount(){
+    return ZombieCount;
 }
 
 

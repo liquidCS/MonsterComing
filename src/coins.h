@@ -14,13 +14,15 @@ typedef struct coinNode{
 #define COIN_TEXTURE_WIDTH 16
 
 
-void initCoins();
-void spawnCoin(Vector2, int);
-void drawCoins();
+void initCoins(); // load settings and textures
+void spawnCoin(Vector2, int); // new coin add
+void drawCoins(); // draw all coins
 
-void coinPickDetect();
+coin *getCoins();
 
-void deleteCoin(coin *, coin *);
-void freeAllCoins();
+void coinPickDetect(); // detect if player pick up coins
+
+void deleteCoin(coin *, coin *); // delete coin 
+void freeAllCoins(); // call when game closed
 
 #endif

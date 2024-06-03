@@ -17,7 +17,7 @@ float waveTimer;
 
 void initWaves(){
     currWave = 0;
-    waveTimer = 0.0;
+    waveTimer = 5.0;
 
     return;
 }

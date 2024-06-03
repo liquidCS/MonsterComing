@@ -25,7 +25,8 @@ int currentCharacter;
 #define CHARACTERS_CHAR_LIST "WARRIOR;NINJA;WITCH"
 Texture2D menuBackGround;
 Texture2D charactersPreview[CHARACTERNUM];
-Texture2D Lock;
+Texture2D Lock, ZombieComingText;
+
 
 // Title Settings and Fonts
 // By https://www.dafont.com/stranger-back-in-the-night.font personal use only
@@ -88,7 +89,7 @@ void initMenu(){
     charactersPreview[2] = LoadTexture("resources/characters/64WitchTemp.png");
 
     Lock = LoadTexture("resources/characters/lock.png");
-
+    ZombieComingText = LoadTexture("resources/ZombieComing.png");
     // Initialize Sound
     click = LoadSound("resources/soundEffect/select.wav");
     MenuBackGroundMusic = LoadMusicStream("resources/music/MenuMusic.mp3");
@@ -112,7 +113,9 @@ void drawMenu(){
     UpdateMusicStream(MenuBackGroundMusic);
 
     // Draw Title
-    DrawTextEx(GetFontDefault(), "Zombie Coming", TITLE_POS, TITLE_FONT_SIZE, TITLE_FONT_SIZE, RED);
+    // DrawTextEx(GetFontDefault(), "Zombie Coming", TITLE_POS, TITLE_FONT_SIZE, TITLE_FONT_SIZE, RED);
+    DrawTexturePro(ZombieComingText, (Rectangle){0,0,ZombieComingText.width, ZombieComingText.height}, (Rectangle){GetScreenWidth()/2 - ZombieComingText.width/3/2, GetScreenHeight()/15, ZombieComingText.width/3, ZombieComingText.height/3}, (Vector2){0,0}, 0.0, WHITE);
+    // DrawTexture(ZombieComingText, GetScreenWidth()/2 - ZombieComingText.width/2, GetScreenHeight()/4, WHITE);
     
     // Draw Buttons and Detections Player Input
     bool startButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT}, "Start Game"); 

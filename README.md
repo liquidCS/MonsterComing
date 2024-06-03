@@ -5,24 +5,25 @@ You must use the special skills and powers of your chosen characters to navigate
 ## Meet the Characters
 ![warrror](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/warrior.gif)![ninja](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/ninja.gif)![witch](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/witch.gif)![Zombie1](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/zombie1.gif)![zombie2](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/zombie2.gif)![slime](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/slime.gif)![enter image description here](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/bat.gif)
 ### Warrior
-•	Role: Frontline fighter with powerful melee attacks.
-•	Normal Attack: Executes swift, lethal strikes against zombies within range.
-•	Special Attack: Unleashes a devastating blow that can decimate multiple zombies at once.
+- Role: Frontline fighter with powerful melee attacks.
+- Normal Attack: Executes swift, lethal strikes against zombies within range.
+- Special Attack: Unleashes a devastating blow that can decimate multiple zombies at once.
 ### Witch
-•	Role: Mystical spellcaster with long-range magical attacks.
-•	Normal Attack: Casts potent spells to eliminate zombies from a distance.
-•	Special Attack: Conjures a powerful spell that causes massive damage over a wide area.
+- Role: Mystical spellcaster with long-range magical attacks.
+- Normal Attack: Casts potent spells to eliminate zombies from a distance.
+- Special Attack: Conjures a powerful spell that causes massive damage over a wide area.
 ### Ninja
-•	Role: Stealthy and agile assassin.
-•	Normal Attack: Quick, precise strikes that incapacitate zombies swiftly.
-•	Special Attack: Performs a series of rapid attacks, dealing heavy damage to any nearby zombies.
+- Role: Stealthy and agile assassin.
+- Normal Attack: Quick, precise strikes that incapacitate zombies swiftly.
+- Special Attack: Performs a series of rapid attacks, dealing heavy damage to any nearby zombies.
 
 ## Controlling
  - Navigate Menu: `using mouse to navigate and click`
  - Player Movement: `press '↑', '↓', '←', '→' `
  - In Game Menu: `press 'M'`
- - Normal Attack: `press '_SPACE_'`
- - Special Attack: `press '_LEFT_SHIFT_'`
+ - Attack
+ 	- Normal Attack: `press '_SPACE_'`
+ 	- Special Attack: `press '_LEFT_SHIFT_'`
  - Debugging
 	 - spawn zombie: `press 'S' `
 

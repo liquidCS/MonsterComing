@@ -29,7 +29,7 @@ void initSaves(){
     // Load Statistic Data
     currStatisticData = (statisticData *)malloc(sizeof(statisticData));
     fread(currStatisticData, sizeof(statisticData), 1, file);
-    printf("LOAD: %lld %lld %lld %lld %lld\n", currStatisticData->gamesPlayed, currStatisticData->zombiesKilled, currStatisticData->coinsEarned, currStatisticData->damagedMade, currStatisticData->lostedHealth);
+    printf("LOAD: %lld %lld %lld %lld %lld %lld\n", currStatisticData->gamesPlayed, currStatisticData->zombiesKilled, currStatisticData->coinsEarned, currStatisticData->damagedMade, currStatisticData->lostedHealth, currStatisticData->maxWave);
     fclose(file);
    return;
 }
@@ -37,7 +37,7 @@ void initSaves(){
 void saveCurrStatistic(){
     FILE *file = fopen(STATISTICDATADIR, "wb");
     fwrite(currStatisticData, sizeof(statisticData), 1, file);
-    printf("Write: %lld %lld %lld %lld %lld\n", currStatisticData->gamesPlayed, currStatisticData->zombiesKilled, currStatisticData->coinsEarned, currStatisticData->damagedMade, currStatisticData->lostedHealth);
+    printf("Write: %lld %lld %lld %lld %lld %lld\n", currStatisticData->gamesPlayed, currStatisticData->zombiesKilled, currStatisticData->coinsEarned, currStatisticData->damagedMade, currStatisticData->lostedHealth, currStatisticData->maxWave);
     fclose(file);
     free(currStatisticData);
     return;
@@ -59,6 +59,9 @@ void writeCurrStatistic(statisticTypes statisticType, ll value){
     else if(statisticType == LOSTEDHEALTH){
         currStatisticData->lostedHealth += value;
     }
+    else if(statisticType == MAXWAVE){
+        currStatisticData->maxWave += value;
+    }
     return;
 }
 
@@ -77,13 +80,16 @@ ll getCurrStatistic(statisticTypes statisticType){
     }
     else if(statisticType == LOSTEDHEALTH){
         return currStatisticData->lostedHealth;
-    }    
+    } 
+    else if(statisticType == MAXWAVE){
+        return currStatisticData->maxWave;
+    }
 }
 
 // Create File - Used When save file does not exist
 statisticData * initData(){
     statisticData *temp = malloc(sizeof(statisticData));
-    *temp = (statisticData){0, 0, 0, 0, 0};
+    *temp = (statisticData){0, 0, 0, 0, 0, 0};
     return temp;
 }
 

@@ -10,28 +10,29 @@ enum characterSelections {WARRIOR, NINJA, WITCH};
 struct player
 {
     enum characterSelections character;
-    Vector2 position;
-    Vector2 center;
-    Texture2D texture;
-    Rectangle hitbox;
-    float animationChangeRate; // ms per change
+    Vector2 position; // Player Current Position on Map
+    Vector2 center; // Player Texture Center Position
+    Texture2D texture; // Player Texture to Draw on Screen
+    Rectangle hitbox; // Hitbox for collision check
+    
+    float animationChangeRate; // Time(ms) per change
     float speed; // pixel per sec (PPS)
-    int level;
-    int xp;
-    int coins;
-    // Health
-    int currHealth;
-    int maxHealth;
-    // Attacks
-    int normalAttackDamage;
-    float normalAttackCool;
-    float normalAttackTimer;
+    int level; // Current Level 
+    int xp; // Current Experience Level
+    int coins; // Current Posessed Coin
+    // **Health**
+    int currHealth; // Current Health
+    int maxHealth; // Max Health 
+    // **Attacks**
+    int normalAttackDamage; // Damage for Normal Attack
+    float normalAttackCool; // Time(s) for Normal Attack Cool Down
+    float normalAttackTimer; // Time(s) Current Cool Down Time
 
-    int specialAttackDamage;
-    float specialAttackCool;
-    float specialAttackTimer;
+    int specialAttackDamage; // Damage for Special Attack
+    float specialAttackCool; //  Time(s) for Special Attack Cool Down
+    float specialAttackTimer; // Time(s) for Current Cool Down time
 
-    float criticalHitPercentage;
+    float criticalHitPercentage; // Critical Hit Chances in %
 };
 
 enum MAINPLAYERSTATES {STOP, WALKING};

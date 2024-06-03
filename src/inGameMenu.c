@@ -34,9 +34,11 @@ void drawInGameMenu(){
     
     DrawText("Damage", inGameMenuX + UPGRADE_GAP_X, inGameMenuY + UPGRADE_GAP_Y*2, UPGRADE_FONTSIZE, UPGRADE_COLOR);
     
-    DrawText("Attack Speed", inGameMenuX + UPGRADE_GAP_X, inGameMenuY + UPGRADE_GAP_Y*3, UPGRADE_FONTSIZE, UPGRADE_COLOR);
-    
-    DrawText("Walk Speed", inGameMenuX + UPGRADE_GAP_X, inGameMenuY + UPGRADE_GAP_Y*4, UPGRADE_FONTSIZE, UPGRADE_COLOR);
+    DrawText("Moving Speed", inGameMenuX + UPGRADE_GAP_X, inGameMenuY + UPGRADE_GAP_Y*3, UPGRADE_FONTSIZE, UPGRADE_COLOR);
+
+    DrawText("Attack Speed", inGameMenuX + UPGRADE_GAP_X, inGameMenuY + UPGRADE_GAP_Y*4, UPGRADE_FONTSIZE, UPGRADE_COLOR);
+
+    DrawText("Ability Cool Down", inGameMenuX + UPGRADE_GAP_X, inGameMenuY + UPGRADE_GAP_Y*5, UPGRADE_FONTSIZE - 1, UPGRADE_COLOR);
 
     for(int i=1; i<=UPGRADE_OPTIONS_COUNT; i++){
         // Draw Button

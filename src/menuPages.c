@@ -51,7 +51,10 @@ void drawStatisticPage(){
     sprintf(temp, "%d", getCurrStatistic(LOSTEDHEALTH));
     DrawText("Losted Health:", statisticWinX + STATISTICPAGE_WALLGAP_TITLE, statisticWinY + STATISTICPAGE_ITEM_GAP*5, STATISTICPAGE_TITLE_FONTSIZE, DARKGREEN);
     DrawText(temp, statisticWinX + STATISTICPAGE_WALLGAP_DATA, statisticWinY + STATISTICPAGE_ITEM_GAP*5, STATISTICPAGE_DATA_FONTSIZE, DARKGREEN);
-        
+    // Max wave Achived
+    sprintf(temp, "%d", getCurrStatistic(MAXWAVE));
+    DrawText("Wave Reached:", statisticWinX + STATISTICPAGE_WALLGAP_TITLE, statisticWinY + STATISTICPAGE_ITEM_GAP*6, STATISTICPAGE_TITLE_FONTSIZE, GOLD);
+    DrawText(temp, statisticWinX + STATISTICPAGE_WALLGAP_DATA, statisticWinY + STATISTICPAGE_ITEM_GAP*6, STATISTICPAGE_DATA_FONTSIZE, GOLD);    
 
 
     return;

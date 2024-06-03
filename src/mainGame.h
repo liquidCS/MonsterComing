@@ -3,7 +3,7 @@
 
 #include "raylib.h"
 
-enum GameStatus{InGame, };
+enum GameStatus{InGame};
 
 
 void initMainGame();

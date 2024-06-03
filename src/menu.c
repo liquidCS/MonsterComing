@@ -111,7 +111,7 @@ void drawMenu(){
     // Button Press Function Call and Current Page Drawing
     if(startButtonPress == true){
         // Load Main Game
-        PlaySound(click);
+        // PlaySound(click);
         initMainGame();
         initMainPlayer(currentCharacter);
         gameStart = true;
@@ -119,14 +119,14 @@ void drawMenu(){
     }
     else if(settingButtonPress == true || currentPage == setting){
         // Load Settings Menu
-        PlaySound(click);
+        // PlaySound(click);
         currentPage = setting;
         drawSettingsPage();
         if(shouldQuitSettingsPage()) currentPage = mainMenu;
     }
     else if(StatisticButtonPress == true || currentPage == credit){
         // Load Credit Page
-        PlaySound(click);
+        // PlaySound(click);
         currentPage = credit;
         drawStatisticPage();
         if(shouldQuitStatisticPage()) currentPage = mainMenu;

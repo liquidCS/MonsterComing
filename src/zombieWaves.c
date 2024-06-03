@@ -7,6 +7,7 @@
 #include "zombies.h"
 #include "gameMath.h"
 #include "basic.h"
+#include "saveHandler.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -25,12 +26,16 @@ void waveLoop(){
     if(waveTimer >= WAVETIME){
         waveTimer = 0; // rest wave timer
         currWave++;  // next wave
+
+        // saves
+        if(currWave > getCurrStatistic(MAXWAVE))
+            writeCurrStatistic(MAXWAVE, currWave-getCurrStatistic(MAXWAVE));
     
         // Calculate the Type of Zombie that is allowed to spawn
         int zombieTypeCount = (currWave/5) + 1;
         if(zombieTypeCount > ZombieTypesCount) zombieTypeCount = zombieTypeCount;
 
-        int zombieSpawnCount = currWave*5; // calculate the amount of zombies to spawn
+        int zombieSpawnCount = currWave*3; // calculate the amount of zombies to spawn
         for(int i=0; i<zombieSpawnCount; i++){
             int degree = rand()%360;
             Vector2 spawnLoc = {getMainPlayerCenter().x + SPAWN_RADIUS*cos(degree2radian(degree)), getMainPlayerCenter().y + SPAWN_RADIUS*sin(degree2radian(degree))}; // generate spawn loacation

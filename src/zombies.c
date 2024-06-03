@@ -69,6 +69,12 @@ void spawnZombie(int zombieType, Vector2 position){
     lastZombie->nextZombie = createNewZombie(zombieType, position);
     // Update lastZombie to newly created zombie
     lastZombie = lastZombie->nextZombie;
+    
+    // zombie *currZombie;
+    // while(currZombie->nextZombie != NULL){
+    //     currZombie = currZombie->nextZombie;
+    // }
+    // currZombie->nextZombie = createNewZombie(zombieType, position);
 
     return;
 }
@@ -79,8 +85,11 @@ void killZombie(zombie *priorZombie, zombie *targetZombie){
     // Drop Coins
     spawnCoin(targetZombie->center, targetZombie->dropCoin);
     // free Zombie
+    
     priorZombie->nextZombie = targetZombie->nextZombie;
-    lastZombie = priorZombie;
+    if(targetZombie->nextZombie == NULL)
+        lastZombie = priorZombie;
+    
     free(targetZombie);
     ZombieCount--; // Decrease 1 Zombie Count
     return;

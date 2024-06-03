@@ -12,13 +12,14 @@ typedef struct statisticData{
     ll coinsEarned;
     ll damagedMade;
     ll lostedHealth;
+    ll maxWave;
 } statisticData;
 
 statisticData * initData();
 void initSaves();
 void closeSaves();
 
-typedef enum{GAMESPLAYED, ZOMBIESKILLED, COINSEARNED, DAMAGEDMADE, LOSTEDHEALTH} statisticTypes;
+typedef enum{GAMESPLAYED, ZOMBIESKILLED, COINSEARNED, DAMAGEDMADE, LOSTEDHEALTH, MAXWAVE} statisticTypes;
 void writeCurrStatistic(statisticTypes, ll);
 ll getCurrStatistic(statisticTypes);
 void saveCurrStatistic();

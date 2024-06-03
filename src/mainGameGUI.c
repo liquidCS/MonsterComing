@@ -23,9 +23,8 @@ void initGameGUI(){
 void drawGUI(){
 
     // Draw Coins Count
-    char charCoins[10], coinUI[20] = "Coins: "; // generate words
-    itoa(getMainPlayerCoins(), charCoins, 10);
-    strcat(coinUI, charCoins);
+    char coinUI[20] = "Coins: "; // generate words
+    sprintf(coinUI, "Coins: %d", getMainPlayerCoins());
     const int COIN_UI_WIDTH = MeasureText(coinUI, COIN_UI_FONT_SIZE);
     
     const int COIN_UI_X = getScreenCoord().x + GetScreenWidth()/2 - COIN_UI_WIDTH/2; // calculate position
@@ -39,7 +38,7 @@ void drawGUI(){
     const int N_ATTACK_UI_CURRENT_X = N_ATTACK_UI_WIDTH*(getNormalAttackTimer()/getNormalAttackCool());    
 
     char N_ATTACK_UI_TEXT[20];
-    sprintf(N_ATTACK_UI_TEXT, "%f", getNormalAttackCool()-getNormalAttackTimer());
+    sprintf(N_ATTACK_UI_TEXT, "%.1fs", getNormalAttackCool()-getNormalAttackTimer());
     const int N_ATTACK_UI_TEXT_WIDTH = MeasureText(N_ATTACK_UI_TEXT, N_ATTACK_UI_FONTSIZE);
     const int N_ATTACK_UI_TEXT_X = getScreenCoord().x + GetScreenWidth()/2 - N_ATTACK_UI_TEXT_WIDTH/2;
     const int N_ATTACK_UI_TEXT_Y = N_ATTACK_UI_Y + (N_ATTACK_UI_HIGHT-N_ATTACK_UI_FONTSIZE)/2;
@@ -54,7 +53,7 @@ void drawGUI(){
     const int S_ATTACK_UI_CURRENT_X = S_ATTACK_UI_WIDTH*(getSpecialAttackTimer()/getSpecialAttackCool());    
 
     char S_ATTACK_UI_TEXT[20];
-    sprintf(S_ATTACK_UI_TEXT, "%f", getSpecialAttackCool()-getSpecialAttackTimer());
+    sprintf(S_ATTACK_UI_TEXT, "%.1fs", getSpecialAttackCool()-getSpecialAttackTimer());
     const int S_ATTACK_UI_TEXT_WIDTH = MeasureText(S_ATTACK_UI_TEXT, S_ATTACK_UI_FONTSIZE);
     const int S_ATTACK_UI_TEXT_X = getScreenCoord().x + GetScreenWidth()/2 - S_ATTACK_UI_TEXT_WIDTH/2;
     const int S_ATTACK_UI_TEXT_Y = S_ATTACK_UI_Y + (S_ATTACK_UI_HIGHT-S_ATTACK_UI_FONTSIZE)/2;
@@ -97,6 +96,11 @@ void drawGUI(){
     char CURRWAVE_NUM[20];
     sprintf(CURRWAVE_NUM, "Curr Wave: %d", getCurrWave());
     DrawText(CURRWAVE_NUM, getScreenCoord().x + GetScreenWidth()/2 - MEXTWAVE_TEXT_LENGTH/2, getScreenCoord().y + WAVE_GAP2SCREENTOP + WAVE_GAP, WAVES_FONTSIZE, DARKGREEN);
+
+    char ZOMBIE_LEFT[20];
+    sprintf(CURRWAVE_NUM, "Zobmie Left: %d", getZombieCount());
+    DrawText(CURRWAVE_NUM, getScreenCoord().x + GetScreenWidth()/2 - MEXTWAVE_TEXT_LENGTH/2, getScreenCoord().y + WAVE_GAP2SCREENTOP + WAVE_GAP*2, WAVES_FONTSIZE, DARKGREEN);
+
 
     // MINI MAP bottom left on screen
     MINIMAP_X = getScreenCoord().x;

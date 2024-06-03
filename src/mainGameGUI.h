@@ -32,6 +32,7 @@
 
 // Waves Information
 #define WAVES_FONTSIZE 20
+#define WAVES_FONTSIZE_BIG 50
 #define MEXTWAVE_TEXT_LENGTH 200
 #define WAVE_GAP2SCREENTOP 5
 #define WAVE_GAP 25

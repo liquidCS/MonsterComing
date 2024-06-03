@@ -1,7 +1,7 @@
 #ifndef BASIC_H
 #define BASIC_H
 
-#define DEBUG 1
+#define DEBUG 2
 
 #define ll long long 
 

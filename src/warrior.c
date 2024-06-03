@@ -13,15 +13,21 @@
 
 Vector2 normalAnimationCenter, specialAnimationCenter;
 Texture2D normalAttackTexture, specialAnimationTexture;
+Sound swordSound;
 
 void initWarriorAttack(){
     normalAttackTexture = LoadTexture("resources/characters/warriorAttackEffect.png");
+    swordSound = LoadSound("resources/soundEffect/swordSound.wav");
 }
 
 void warriorNormalAttack(){
     zombie *currZombie = getZombies();
     enum MAINPLAYERFACING facing = getMainPlayerFacing();
     Rectangle attackRange;
+
+    // Play Sound Effect
+    if(!IsSoundPlaying(swordSound))
+        PlaySound(swordSound);
 
     // Generate Attack Range
     if(facing == NORTH){

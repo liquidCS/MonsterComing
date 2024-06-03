@@ -2,6 +2,7 @@
 #define ZOMBIEWAVES_C
 
 #include "raylib.h"
+#include "mainGame.h"
 #include "mainPlayer.h"
 #include "zombieWaves.h"
 #include "zombies.h"
@@ -31,11 +32,16 @@ void waveLoop(){
         if(currWave > getCurrStatistic(MAXWAVE))
             writeCurrStatistic(MAXWAVE, currWave-getCurrStatistic(MAXWAVE));
     
+        // spawn loots 45 % chance
+        if(rand() % 100  < 45)
+            spawnZombie(LOOTBOX, (Vector2){rand()%getMainGameBackGround().width, rand()%getMainGameBackGround().height});
+
         // Calculate the Type of Zombie that is allowed to spawn
         int zombieTypeCount = (currWave/5) + 1;
-        if(zombieTypeCount > ZombieTypesCount) zombieTypeCount = zombieTypeCount;
+        if(zombieTypeCount > ZombieTypesCount -1) zombieTypeCount = zombieTypeCount;
 
         int zombieSpawnCount = currWave*3; // calculate the amount of zombies to spawn
+        if(zombieSpawnCount > 15) zombieSpawnCount = 15;
         for(int i=0; i<zombieSpawnCount; i++){
             int degree = rand()%360;
             Vector2 spawnLoc = {getMainPlayerCenter().x + SPAWN_RADIUS*cos(degree2radian(degree)), getMainPlayerCenter().y + SPAWN_RADIUS*sin(degree2radian(degree))}; // generate spawn loacation

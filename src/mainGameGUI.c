@@ -93,14 +93,19 @@ void drawGUI(){
     sprintf(NEXTWAVE_TIME, "Next Wave: %.1fs", getNextWaveTime());
     DrawText(NEXTWAVE_TIME, getScreenCoord().x + GetScreenWidth()/2 - MEXTWAVE_TEXT_LENGTH/2, getScreenCoord().y + WAVE_GAP2SCREENTOP, WAVES_FONTSIZE, RED);
 
-    char CURRWAVE_NUM[20];
-    sprintf(CURRWAVE_NUM, "Curr Wave: %d", getCurrWave());
-    DrawText(CURRWAVE_NUM, getScreenCoord().x + GetScreenWidth()/2 - MEXTWAVE_TEXT_LENGTH/2, getScreenCoord().y + WAVE_GAP2SCREENTOP + WAVE_GAP, WAVES_FONTSIZE, DARKGREEN);
-
     char ZOMBIE_LEFT[20];
-    sprintf(CURRWAVE_NUM, "Zobmie Left: %d", getZombieCount());
-    DrawText(CURRWAVE_NUM, getScreenCoord().x + GetScreenWidth()/2 - MEXTWAVE_TEXT_LENGTH/2, getScreenCoord().y + WAVE_GAP2SCREENTOP + WAVE_GAP*2, WAVES_FONTSIZE, DARKGREEN);
+    sprintf(ZOMBIE_LEFT, "Zobmie Left: %d", getZombieCount());
+    DrawText(ZOMBIE_LEFT, getScreenCoord().x + GetScreenWidth()/2 - MEXTWAVE_TEXT_LENGTH/2, getScreenCoord().y + WAVE_GAP2SCREENTOP + WAVE_GAP, WAVES_FONTSIZE, RED);
 
+    char CURRWWAVE_TEXT[20] = "Curr Wave:";
+    char CURRWAVE_NUM[20]; // draw Current wave
+    sprintf(CURRWAVE_NUM, "%d", getCurrWave());
+    int CURRWAVE_TEXT_WIDTH = MeasureText(CURRWWAVE_TEXT, WAVES_FONTSIZE);
+    int CURRWAVE_NUM_WIDTH = MeasureText(CURRWAVE_NUM, WAVES_FONTSIZE_BIG);
+
+    DrawText(CURRWWAVE_TEXT, getScreenCoord().x + GetScreenWidth() - (CURRWAVE_TEXT_WIDTH + CURRWAVE_NUM_WIDTH + WAVE_GAP), getScreenCoord().y + WAVE_GAP2SCREENTOP, WAVES_FONTSIZE, RED);
+    DrawText(CURRWAVE_NUM, getScreenCoord().x + GetScreenWidth() - CURRWAVE_NUM_WIDTH - WAVE_GAP2SCREENTOP, getScreenCoord().y + WAVE_GAP2SCREENTOP, WAVES_FONTSIZE_BIG, RED);
+    
 
     // MINI MAP bottom left on screen
     MINIMAP_X = getScreenCoord().x;
@@ -125,7 +130,10 @@ void drawGUI(){
     while(currZombie != NULL){
         if(currZombie->zombieType != FIRSTNODEZOMBIE){
             // Draw Zombie On Mini Map
-            DrawCircle(MINIMAP_X + MINIMAP_WIDTH*(currZombie->position.x/getMainGameBackGround().width), MINIMAP_Y + MINIMAP_HEIGHT*(currZombie->position.y/getMainGameBackGround().height), 2, RED);
+            if(currZombie->zombieType == LOOTBOX)
+                DrawCircle(MINIMAP_X + MINIMAP_WIDTH*(currZombie->position.x/getMainGameBackGround().width), MINIMAP_Y + MINIMAP_HEIGHT*(currZombie->position.y/getMainGameBackGround().height), 2, GOLD);
+            else
+                DrawCircle(MINIMAP_X + MINIMAP_WIDTH*(currZombie->position.x/getMainGameBackGround().width), MINIMAP_Y + MINIMAP_HEIGHT*(currZombie->position.y/getMainGameBackGround().height), 2, RED);
         }
         // Next Zombie Node
         currZombie = currZombie->nextZombie;

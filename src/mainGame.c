@@ -17,11 +17,15 @@
 Texture2D backGround;
 Camera2D mainCam;
 Vector2 screenCoord;
+Music backGroundMusic;
 
 // Load Texture, Sound and Initialize Valuables
 void initMainGame(){
-    // Load Background
+    // Load Background  
     backGround = LoadTexture("resources/MAP01.png");
+
+    // Load Music
+    backGroundMusic = LoadMusicStream("resources/music/MainGameMusic.mp3");
 
     // Initialize Camera
     mainCam.offset = (Vector2){0, 0};
@@ -72,6 +76,13 @@ void drawMainGame(){
     mainCam.target = (Vector2){(int)getMainPlayerLoc().x, (int)getMainPlayerLoc().y};
     _cameraRenderFix();
     BeginMode2D(mainCam);
+
+    // Play Music
+    if(!IsMusicStreamPlaying(backGroundMusic)){
+        printf("playing\n");
+        PlayMusicStream(backGroundMusic);
+    }
+    UpdateMusicStream(backGroundMusic);
 
     // Cool Down, Animation...
     timerUpdate();

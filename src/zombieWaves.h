@@ -12,7 +12,7 @@ Zombie spawning:
 
 */
 
-#define WAVETIME 1.0f
+#define WAVETIME 15.0f
 #define SPAWN_RADIUS 500
 
 void initWaves(); // init Waves, Load settings

@@ -4,8 +4,8 @@
 #include "raylib.h"
 #include "mainPlayer.h"
 
-#define ZombieTypesCount 2
-enum zombieTypes {LEVEL1V1, LEVEL1V2, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for identification for the first node of zombies
+#define ZombieTypesCount 5
+enum zombieTypes {LEVEL1V1, LEVEL1V2, LEVEL2, LEVEL3, LOOTBOX, FIRSTNODEZOMBIE}; // "FIRSTNODEZOMBIE" for identification for the first node of zombies
 
 // For Zombie Health Bar
 #define LEVEL1_HEALTHBAR_HEIGHT 5
@@ -25,7 +25,7 @@ typedef struct zombie{
     Vector2 center; // Zombie Texture Center Position
     Rectangle hitbox; // Zombie Hitbox to detect collision
 
-    // Link list of zombie
+    // 88Link list of zombie88
     struct zombie *nextZombie; // next Zombie
 }zombie;
 

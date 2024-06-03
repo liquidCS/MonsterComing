@@ -32,6 +32,9 @@ void initZombies(){
     // Load Texture
     zombieTextures[LEVEL1V1] = LoadTexture("resources/zombies/zombie1.png");
     zombieTextures[LEVEL1V2] = LoadTexture("resources/zombies/zombie2.png");
+    zombieTextures[LEVEL2] = LoadTexture("resources/zombies/slime.png");
+    zombieTextures[LEVEL3] = LoadTexture("resources/zombies/bat.png");
+    zombieTextures[LOOTBOX] = LoadTexture("resources/zombies/lootbox.png");
 
     return;
 }
@@ -56,6 +59,33 @@ zombie * createNewZombie(int zombieType, Vector2 position){
         newZombie -> dropCoin = 2;
         newZombie -> position = position;
     }
+    else if(zombieType == LEVEL2){
+        newZombie -> zombieType = zombieType;
+        newZombie -> maxHealth = 30;
+        newZombie -> health = 30;
+        newZombie -> speed = 60;
+        newZombie -> dropXP = 20;
+        newZombie -> dropCoin = 5;
+        newZombie -> position = position;     
+    }
+    else if(zombieType == LEVEL3){
+        newZombie -> zombieType = zombieType;
+        newZombie -> maxHealth = 40;
+        newZombie -> health = 40;
+        newZombie -> speed = 70;
+        newZombie -> dropXP = 20;
+        newZombie -> dropCoin = 10;
+        newZombie -> position = position;     
+    }
+    else if(zombieType == LOOTBOX){
+        newZombie -> zombieType = zombieType;
+        newZombie -> maxHealth = 40;
+        newZombie -> health = 40;
+        newZombie -> speed = 0;
+        newZombie -> dropXP = 20;
+        newZombie -> dropCoin = 50;
+        newZombie -> position = position;      
+    }
     newZombie -> hitbox = (Rectangle) {position.x, position.y, ZOMBIE_SIZE, ZOMBIE_SIZE};
     newZombie -> center = (Vector2){newZombie->position.x + newZombie->hitbox.width/2, newZombie->position.y + newZombie->hitbox.height/2};
     newZombie -> nextZombie = NULL;
@@ -69,12 +99,6 @@ void spawnZombie(int zombieType, Vector2 position){
     lastZombie->nextZombie = createNewZombie(zombieType, position);
     // Update lastZombie to newly created zombie
     lastZombie = lastZombie->nextZombie;
-    
-    // zombie *currZombie;
-    // while(currZombie->nextZombie != NULL){
-    //     currZombie = currZombie->nextZombie;
-    // }
-    // currZombie->nextZombie = createNewZombie(zombieType, position);
 
     return;
 }

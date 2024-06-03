@@ -86,6 +86,21 @@ void otherKeyDetection(){
         specialAttack();
     }
 
+    // Demo Mode
+    # if DEBUG == 1 || DEBUG == 2
+        Vector2 spawnLoc = {getMainPlayerCenter().x, getMainPlayerCenter().y};
+        if(IsKeyPressed(KEY_FIVE))
+            spawnZombie(LOOTBOX, spawnLoc);
+        if(IsKeyPressed(KEY_ONE))
+            spawnZombie(LEVEL1V1, spawnLoc);
+        if(IsKeyPressed(KEY_TWO))
+            spawnZombie(LEVEL1V2, spawnLoc);
+        if(IsKeyPressed(KEY_THREE))
+            spawnZombie(LEVEL2, spawnLoc);
+        if(IsKeyPressed(KEY_FOUR))
+            spawnZombie(LEVEL3, spawnLoc);
+    #endif
+
     // DEBUG Spawn zombie
     #if DEBUG == 1
         if(IsKeyDown(KEY_S)){

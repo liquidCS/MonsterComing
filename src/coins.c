@@ -68,7 +68,8 @@ void coinPickDetect(){
                 // Add to statistic
                 writeCurrStatistic(COINSEARNED, currCoin->value);                
                 // Play Coin Sound
-                PlaySound(pickUPCoinSound);
+                if(!IsSoundPlaying(pickUPCoinSound))
+                    PlaySound(pickUPCoinSound);
                 // Add to Current Coin Count
                 addMainPlayerCoin(currCoin->value);
                 // Delete Coin

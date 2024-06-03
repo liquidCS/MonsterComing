@@ -7,6 +7,7 @@
 #include "mainPlayer.h"
 #include "menuPages.h"
 #include "zombies.h"
+#include "saveHandler.h"
 
 // Layout Settings
 int BUTTON_X;
@@ -20,9 +21,11 @@ int TOGGLE_Y;
 int currentCharacter;
 #define TOGGLE_WIDTH 200
 #define TOGGLE_HEIGHT 50
-#define CHARACTERNUM 2
+#define CHARACTERNUM 3
 #define CHARACTERS_CHAR_LIST "WARRIOR;NINJA;WITCH"
+Texture2D menuBackGround;
 Texture2D charactersPreview[CHARACTERNUM];
+Texture2D Lock;
 
 // Title Settings and Fonts
 // By https://www.dafont.com/stranger-back-in-the-night.font personal use only
@@ -41,6 +44,7 @@ enum PAGES currentPage;
 
 // Sound Effects
 Sound click;
+Music MenuBackGroundMusic;
 
 // User Selections
 enum characterSelections selectedCharacter;
@@ -74,14 +78,20 @@ void initMenu(){
     TOGGLE_X = GetScreenWidth()/1.5;
     TOGGLE_Y = GetScreenHeight()/1.5;
 
+    // Menu BackGround
+    menuBackGround = LoadTexture("resources/MAP01.png");
+
     // Load Character Preview Images
     currentCharacter = 0;
-    charactersPreview[0] = LoadTexture("resources/characters/64TempCh1.png");
-    charactersPreview[1] = LoadTexture("resources/characters/64TempCh2.png");
-    charactersPreview[1] = LoadTexture("resources/characters/64TempCh3.png");
+    charactersPreview[0] = LoadTexture("resources/characters/64WarriorTemp.png");
+    charactersPreview[1] = LoadTexture("resources/characters/64NinjaTemp.png");
+    charactersPreview[2] = LoadTexture("resources/characters/64WitchTemp.png");
+
+    Lock = LoadTexture("resources/characters/lock.png");
 
     // Initialize Sound
     click = LoadSound("resources/soundEffect/select.wav");
+    MenuBackGroundMusic = LoadMusicStream("resources/music/MenuMusic.mp3");
 
     // Initialize Pages and Careers
     currentPage = mainMenu;
@@ -94,6 +104,12 @@ void initMenu(){
 void drawMenu(){
     // Draw Background
     ClearBackground(BLACK);
+    DrawTexture(menuBackGround, 0, 0, WHITE);
+
+    // Play Music
+    if(!IsMusicStreamPlaying(MenuBackGroundMusic))
+        PlayMusicStream(MenuBackGroundMusic);
+    UpdateMusicStream(MenuBackGroundMusic);
 
     // Draw Title
     DrawTextEx(GetFontDefault(), "Zombie Coming", TITLE_POS, TITLE_FONT_SIZE, TITLE_FONT_SIZE, RED);
@@ -105,8 +121,29 @@ void drawMenu(){
     bool quitButtonPress = GuiButton((Rectangle){BUTTON_X, BUTTON_Y+3*BUTTON_GAP, BUTTON_WIDTH, BUTTON_HEIGHT}, "Quit");
 
     // Character Selector
-    DrawTexture(charactersPreview[currentCharacter], TOGGLE_X + (TOGGLE_WIDTH-charactersPreview[currentCharacter].width)/2, TOGGLE_Y - charactersPreview[currentCharacter].height-BUTTON_GAP, WHITE);
+    Rectangle PreviewLoc = {TOGGLE_X + (TOGGLE_WIDTH-100)/2, TOGGLE_Y - charactersPreview[currentCharacter].height-BUTTON_GAP, 100, 100};
+    DrawTexturePro(charactersPreview[currentCharacter], (Rectangle){0,0,64,64}, PreviewLoc, (Vector2){0,0}, 0.0, WHITE);
+    // DrawTexture(charactersPreview[currentCharacter], TOGGLE_X + (TOGGLE_WIDTH-charactersPreview[currentCharacter].width)/2, TOGGLE_Y - charactersPreview[currentCharacter].height-BUTTON_GAP, WHITE);
     GuiComboBox((Rectangle){TOGGLE_X, TOGGLE_Y, TOGGLE_WIDTH, TOGGLE_HEIGHT}, CHARACTERS_CHAR_LIST, &currentCharacter);
+
+    // Check if unlock character
+    if(currentCharacter == NINJA && getCurrStatistic(MAXWAVE) < 25){
+        Rectangle lockLoc = {PreviewLoc.x + 25, PreviewLoc.y+25, 128, 128};
+        DrawTexturePro(Lock, (Rectangle){0,0,64,64}, PreviewLoc, (Vector2){0,0}, 0.0, WHITE);
+        
+        char LockText[] = "Unlock Reach 25 waves";
+        int len = MeasureText(LockText, 20);
+        DrawText(LockText, PreviewLoc.x - len/3, PreviewLoc.y - 20, 20, RED);   
+    }
+    else if(currentCharacter == WITCH && getCurrStatistic(MAXWAVE) < 40){
+        Rectangle lockLoc = {PreviewLoc.x + 25, PreviewLoc.y+25, 128, 128};
+        DrawTexturePro(Lock, (Rectangle){0,0,64,64}, PreviewLoc, (Vector2){0,0}, 0.0, WHITE);
+
+        char LockText[] = "Unlock Reach 40 waves";
+        int len = MeasureText(LockText, 20);
+        DrawText(LockText, PreviewLoc.x - len/3, PreviewLoc.y - 20, 20, RED);
+    }
+
 
     // Button Press Function Call and Current Page Drawing
     if(startButtonPress == true){

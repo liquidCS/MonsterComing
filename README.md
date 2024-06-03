@@ -1,9 +1,9 @@
 # ZombieComing
-
+![DemoGIF](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/DemoGIF.gif)
 ## Game Theme
 You must use the special skills and powers of your chosen characters to navigate through swarms of zombies, whether it be the Warrior's powerful physical attacks, the Witch's ethereal ranged attacks, or the Ninja's quick-accurate blows.
 ## Meet the Characters
-![warrror](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/warrior.gif)![ninja](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/ninja.gif)![witch](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/witch.gif)![Zombie1](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/zombie1.gif)![zombie2](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/zombie2.gif)![slime](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/slime.gif)![enter image description here](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/bat.gif)
+![warrror](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/warrior.gif)![ninja](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/ninja.gif)![witch](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/witch.gif)![Zombie1](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/zombie1.gif)![zombie2](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/zombie2.gif)![slime](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/slime.gif)![bat](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/bat.gif)
 ### Warrior
 - Role: Frontline fighter with powerful melee attacks.
 - Normal Attack: Executes swift, lethal strikes against zombies within range.

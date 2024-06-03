@@ -33,7 +33,7 @@ You must use the special skills and powers of your chosen characters to navigate
 | 412410083 | liquidCS | Most of the structers and codes |
 | 412410018 | alien4321 | All the Arts |
 | 412410036 | Sheeesh77 | Zombie Attacks |
-| 412140039 | carolll39 | Works on witch.c |
+| 412410039 | carolll39 | Works on witch.c |
 | 411125028 | JFKyiasd | Works on ninja.c |
 
 

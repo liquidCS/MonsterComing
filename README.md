@@ -1,5 +1,14 @@
 # ZombieComing
-![DemoGIF](https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/DemoGIF.gif)
+A 2D Single Player PVE survival Game build by C with [raylib](https://www.raylib.com/).
+
+### Combat and Animation
+
+<img src="https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/DemoGIF.gif" width="800">
+
+### Explore Different maps
+<img src="https://raw.githubusercontent.com/liquidCS/MonsterComing/main/Resources/Maps.gif" width="800">
+
+
 ## Game Theme
 You must use the special skills and powers of your chosen characters to navigate through swarms of zombies, whether it be the Warrior's powerful physical attacks, the Witch's ethereal ranged attacks, or the Ninja's quick-accurate blows.
 ## Meet the Characters
@@ -16,6 +25,9 @@ You must use the special skills and powers of your chosen characters to navigate
 - Role: Stealthy and agile assassin.
 - Normal Attack: Quick, precise strikes that incapacitate zombies swiftly.
 - Special Attack: Performs a series of rapid attacks, dealing heavy damage to any nearby zombies.
+### Zombie
+- From Level 1 to Level 4
+- higher level zombie will have more health, faster speed, and higher damage
 
 ## Controlling
  - Navigate Menu: `using mouse to navigate and click`
@@ -24,8 +36,8 @@ You must use the special skills and powers of your chosen characters to navigate
  - Attack
  	- Normal Attack: `press '_SPACE_'`
  	- Special Attack: `press '_LEFT_SHIFT_'`
- - Debugging
-	 - spawn zombie: `press 'S' `
+ - Debugging ( MODE == 1)
+	 - spawn zombie: `press '1' to '5' to spawn each level of zombie `
 
 ## Work Division
 | Members | Github ID | Work |
